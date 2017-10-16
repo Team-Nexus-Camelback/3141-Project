@@ -51,7 +51,7 @@
                      </top>
                      <bottom>
 						<!--Button to bring up the adding data prompty-->
-                        <Button mnemonicParsing="false" text="+" BorderPane.alignment="BOTTOM_RIGHT" />
+                        <Button mnemonicParsing="false" onAction="#inputWindow" text="+" BorderPane.alignment="BOTTOM_RIGHT" />
                      </bottom>
                   </BorderPane>
                </content>
