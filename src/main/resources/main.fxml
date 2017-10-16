@@ -6,9 +6,72 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="MainWindowController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+				<!--Create a new budget-->
+              <MenuItem mnemonicParsing="false" text="New" />
+				<!--Open exiting budget file-->
+                  <MenuItem mnemonicParsing="false" text="Open" />
+				  <!--Save the current budget-->
+                  <MenuItem mnemonicParsing="false" text="Save" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+			<!--This is the "main" view. It will have the add button so people can add their perchases-->
+          <Tab text="Main View">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+						<!--This will get the months from the file/class that keeps track of months and that available data-->
+                        <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_LEFT">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </MenuButton>
+                     </top>
+                     <bottom>
+						<!--Button to bring up the adding data prompty-->
+                        <Button mnemonicParsing="false" onAction="#inputWindow" text="+" BorderPane.alignment="BOTTOM_RIGHT" />
+                     </bottom>
+                  </BorderPane>
+               </content>
+          </Tab>
+		  <!--This will be the tab that has the view for seeing the graph and information that will be on that page-->
+          <Tab text="Graph View">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_LEFT">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </MenuButton>
+                     </top>
+                  </BorderPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
