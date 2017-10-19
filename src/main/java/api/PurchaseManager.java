@@ -24,17 +24,14 @@ public class PurchaseManager {
     }
 
     private PurchaseManager() {
+        // this is a temporary setup for this class
         purchaseInteractor = new CreatePurchaseInteractor(new SimpleBudgetRepo(new BudgetMonth()));
     }
 
-    public Hashtable<String, String> savePurchaseData( String category, float amount){
-        int idForPurchase = createIDForPurchase();
-        PurchaseCreationRequest createRequest = new PurchaseCreationRequest(idForPurchase, String.valueOf(amount), category, "10/18/2017");
+    public Hashtable<String, String> savePurchaseData(int id, String category, float amount){
+        PurchaseCreationRequest createRequest = new PurchaseCreationRequest(id, String.valueOf(amount), category, "10/18/2017");
         return purchaseInteractor.handleRequest(createRequest).getMessage();
     }
 
-    private int createIDForPurchase() {
 
-        return 0;
-    }
 }
