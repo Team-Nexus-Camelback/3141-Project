@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DummyBudgetRepo implements BudgetMonthRepository {
 
-    private BudgetMonth month = new BudgetMonth();
+    private BudgetMonth month = new BudgetMonth("10-2017");
 
     public DummyBudgetRepo(BudgetMonth month) {
         this.month = month;

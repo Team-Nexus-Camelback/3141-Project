@@ -1,6 +1,7 @@
 package core.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -8,6 +9,11 @@ import java.util.List;
  */
 public class BudgetMonth {
     private ArrayList<Purchase> purchasesList = new ArrayList<>();
+    private String monthDate;
+
+    public BudgetMonth(String date) {
+        this.monthDate = date;
+    }
 
     public void addPurchase(Purchase purchase){
         purchasesList.add(purchase.getId(), purchase);
@@ -26,5 +32,7 @@ public class BudgetMonth {
         return purchaseFromCategory;
     }
 
-
+    public String getMonthDate() {
+        return monthDate;
+    }
 }

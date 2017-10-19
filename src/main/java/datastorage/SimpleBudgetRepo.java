@@ -12,11 +12,9 @@ import java.util.List;
  */
 public class SimpleBudgetRepo implements BudgetMonthRepository {
 
-    private BudgetMonth month = new BudgetMonth();
+    private BudgetMonth month = new BudgetMonth("10-2017");
 
-    public SimpleBudgetRepo(BudgetMonth month) {
-        this.month = month;
-    }
+
 
     @Override
     public BudgetMonth getMonthFromDate(String date) {

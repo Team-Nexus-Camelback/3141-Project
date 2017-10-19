@@ -17,22 +17,38 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
 
     private BudgetMonthRepository monthRepository;
     private PurchaseFactory purchaseFactory = new PurchaseFactory();
+    private BudgetMonth currentWorkingMonth = new BudgetMonth("00-0000"); // starts out with an impossible value
 
     public CreatePurchaseInteractor(BudgetMonthRepository monthRepository) {
         this.monthRepository = monthRepository;
     }
 
+    private BudgetMonth getMonthFromRequestDate(String requestDate){
+        if (requestDate.equals(currentWorkingMonth.getMonthDate()))
+            return currentWorkingMonth;
+        else {
+            BudgetMonth revelvantMonth = monthRepository.getMonthFromDate(requestDate);
+            switchWorkingMonth(revelvantMonth);
+            return revelvantMonth;
+        }
+    }
+
+    private void switchWorkingMonth(BudgetMonth revelvantMonth) {
+        this.currentWorkingMonth = revelvantMonth;
+    }
+
+    // TODO add error checking
     @Override
     public PurchaseResponseMessage handleRequest(PurchaseCreationRequest request) {
-
-        BudgetMonth month = monthRepository.getMonthFromDate(request.getDate());
+        BudgetMonth month =  getMonthFromRequestDate(request.getDate());
         Purchase purchaseToAdd = purchaseFactory.makeNewPurchaseFromRequest(request);
+        savePurchaseToMonth(purchaseToAdd, month);
+        return createResponseFromRequest(request);
+    }
+
+    private void savePurchaseToMonth(Purchase purchaseToAdd, BudgetMonth month){
         month.addPurchase(purchaseToAdd);
         monthRepository.saveBudgetMonth(month);
-
-
-        //go about creating the response
-        return createResponseFromRequest(request);
     }
 
     private PurchaseResponseMessage createResponseFromRequest(PurchaseCreationRequest request){
