@@ -15,6 +15,7 @@ public class MainWindow extends Application {
         primaryStage.setTitle("BUDGET APP TITLE");
         primaryStage.setScene(new Scene(root, 1600, 900));
         primaryStage.show();
+        
     }
 
 

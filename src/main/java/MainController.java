@@ -47,8 +47,14 @@ public class MainController implements Initializable {
     
     @FXML
     protected void addPressed(ActionEvent e) throws IOException{
-//    	test1.setText(categoryBox.getValue());
-//    	test2.setText(amount.getText());
+    	test1.setText(categoryBox.getValue());
+    	Double numericValue;
+    	if (categoryBox.getValue().equals("Purchase Category")) {
+    		numericValue = 0.0 - Double.parseDouble(amount.getText());
+    	}
+    	else
+    		numericValue = Double.parseDouble(amount.getText());
+    	test2.setText(numericValue.toString());
     }
     /**
      * Initializes the controller class.
