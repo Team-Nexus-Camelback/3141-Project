@@ -5,14 +5,21 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InputWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
    <children>
-      <ChoiceBox layoutX="51.0" layoutY="270.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="categoryBox" layoutX="51.0" layoutY="270.0" prefWidth="150.0" value="Choose Category">
+      	<items>
+      		<FXCollections fx:factory="observableArrayList">
+      			<String fx:value="Purchase Category" />
+      			<String fx:value="Credit Category" />
+      		</FXCollections>
+      	</items>
+      </ChoiceBox>
       <TextField layoutX="240.0" layoutY="270.0" prefHeight="31.0" prefWidth="229.0" />
       <Label layoutX="96.0" layoutY="233.0" text="Category" />
       <Label layoutX="328.0" layoutY="233.0" text="Amount" />
-      <Button layoutX="499.0" layoutY="270.0" mnemonicParsing="false" text="Add" />
+      <Button layoutX="499.0" layoutY="270.0" mnemonicParsing="false" onAction="#addPressed" text="Add" />
    </children>
 </AnchorPane>

@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 /**
@@ -24,23 +25,36 @@ import javafx.stage.Stage;
  */
 public class MainController implements Initializable {
 
+    
+    @FXML
     private ResourceBundle resources;
-
+    @FXML
+    protected Label test1;
+    @FXML
+    protected Label test2;
+    @FXML
+    protected ChoiceBox<String> categoryBox;
+    @FXML
+    protected TextField amount;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
-            stage.setScene(new Scene(root, 450, 450));
+            stage.setTitle("Input Dialogue");
+            stage.setScene(new Scene(root, 600, 450));
             stage.show();
-        
+    }
+    
+    @FXML
+    protected void addPressed(ActionEvent e) throws IOException{
+//    	test1.setText(categoryBox.getValue());
+//    	test2.setText(amount.getText());
     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }    
     
 }

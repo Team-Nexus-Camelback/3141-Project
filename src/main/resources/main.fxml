@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?language javascript?>
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -41,19 +42,23 @@
           <Tab text="Main View">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-						<!--This will get the months from the file/class that keeps track of months and that available data-->
-                        <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_LEFT">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
-                          </items>
-                        </MenuButton>
-                     </top>
                      <bottom>
 						<!--Button to bring up the adding data prompty-->
                         <Button mnemonicParsing="false" onAction="#inputWindow" text="+" BorderPane.alignment="BOTTOM_RIGHT" />
                      </bottom>
+                     <top>
+                        <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER">
+                        	<!-- Code for taking in arraylist of months -->
+                        </ChoiceBox>
+                     </top>
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="test1" layoutX="50.0" layoutY="75.0" />
+                              <Label fx:id="test2" layoutX="232.0" layoutY="84.0" />
+                           </children>
+                        </AnchorPane>
+                     </center>
                   </BorderPane>
                </content>
           </Tab>
@@ -62,12 +67,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <top>
-                        <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_LEFT">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
-                          </items>
-                        </MenuButton>
+                        <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER" />
                      </top>
                   </BorderPane>
                </content>
