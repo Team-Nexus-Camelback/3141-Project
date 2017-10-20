@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?language javascript?>
+<?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<<<<<<< HEAD
 <BorderPane fx:controller="MainWindowController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+=======
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+>>>>>>> 969c1e64ec3374a307d86bd0443dc40f6b2416b4
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -40,19 +46,23 @@
           <Tab text="Main View">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <top>
-						<!--This will get the months from the file/class that keeps track of months and that available data-->
-                        <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_LEFT">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
-                          </items>
-                        </MenuButton>
-                     </top>
                      <bottom>
 						<!--Button to bring up the adding data prompty-->
                         <Button mnemonicParsing="false" onAction="#inputWindow" text="+" BorderPane.alignment="BOTTOM_RIGHT" />
                      </bottom>
+                     <top>
+                        <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER">
+                        	<!-- Code for taking in arraylist of months -->
+                        </ChoiceBox>
+                     </top>
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="test1" layoutX="50.0" layoutY="75.0" />
+                              <Label fx:id="test2" layoutX="232.0" layoutY="84.0" />
+                           </children>
+                        </AnchorPane>
+                     </center>
                   </BorderPane>
                </content>
           </Tab>
@@ -61,12 +71,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <top>
-                        <MenuButton mnemonicParsing="false" text="MenuButton" BorderPane.alignment="TOP_LEFT">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
-                          </items>
-                        </MenuButton>
+                        <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER" />
                      </top>
                   </BorderPane>
                </content>
