@@ -60,12 +60,12 @@
                         <AnchorPane prefHeight="70.0" prefWidth="571.0" BorderPane.alignment="CENTER">
                            <children>
                               <ChoiceBox fx:id="categoryBox" layoutX="34.0" layoutY="30.0" prefWidth="150.0" >
-                              <items>
-      								<FXCollections fx:factory="observableArrayList">
-      									<String fx:value="Purchase Category" />
-      									<String fx:value="Credit Category" />
-      								</FXCollections>
-      							</items>
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+      					<String fx:value="Purchase Category" />
+      					<String fx:value="Credit Category" />
+                                    </FXCollections>
+      				</items>
                               </ChoiceBox>
                               <TextField fx:id="amount" layoutX="236.0" layoutY="30.0" />
                               <Button layoutX="442.0" layoutY="30.0" mnemonicParsing="false" onAction="#addPressed" text="+" />
