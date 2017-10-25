@@ -1,8 +1,8 @@
 package core.entities;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import core.util.MonthGrapher;
+
+import java.util.*;
 
 /**
  * Created by ryan on 10/17/17.
@@ -10,6 +10,8 @@ import java.util.List;
 public class BudgetMonth {
     private ArrayList<Purchase> purchasesList = new ArrayList<>();
     private String monthDate;
+    private HashMap<String, Double> categories = new HashMap<>();
+    private double amountSpendingFormonth;
 
     public BudgetMonth(String date) {
         this.monthDate = date;
@@ -19,20 +21,37 @@ public class BudgetMonth {
         purchasesList.add(purchase.getId(), purchase);
     }
 
+    public void addNewCategoryBudgetIfNew(String category, double budget) {
+        categories.put(category, budget);
+    }
+
     public Purchase purchaseFromID(int id){
         return purchasesList.get(id);
     }
 
-    public List<Purchase> purchasesOfCategory(String category) throws Exception{
-        ArrayList<Purchase> purchaseFromCategory = new ArrayList<>();
-        for (Purchase purchase : purchasesList){
-            if (purchase.getCategory().equals(category))
-                purchaseFromCategory.add(purchase);
+    public List<Purchase> purchasesOfCategory(String category){
+        if (categories.keySet().contains(category)) {
+            ArrayList<Purchase> purchaseFromCategory = new ArrayList<>();
+            for (Purchase purchase : purchasesList) {
+                if (purchase.getCategory().equals(category))
+                    purchaseFromCategory.add(purchase);
+            }
+            return purchaseFromCategory;
         }
-        return purchaseFromCategory;
+        return new ArrayList<>();
+    }
+
+    public double categoryBudget(String category){
+        return categories.get(category);
     }
 
     public String getMonthDate() {
         return monthDate;
+    }
+
+    public List<String> allPurchaseCategories(){
+        ArrayList<String> listOfCategories =  new ArrayList<>();
+        listOfCategories.addAll(categories.keySet());
+        return listOfCategories;
     }
 }

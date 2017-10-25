@@ -5,6 +5,7 @@ package core.gateways;
  */
 public abstract class ResponseMessage<T> {
     protected boolean successful;
+    protected T message;
 
     public boolean isSuccessful() {
         return successful;
