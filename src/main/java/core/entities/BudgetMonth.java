@@ -13,8 +13,9 @@ public class BudgetMonth {
     private HashMap<String, Double> categories = new HashMap<>();
     private double amountSpendingFormonth;
 
-    public BudgetMonth(String date) {
+    public BudgetMonth(String date, double allocateMoney) {
         this.monthDate = date;
+        this.amountSpendingFormonth = allocateMoney;
     }
 
     public void addPurchase(Purchase purchase){
@@ -22,6 +23,9 @@ public class BudgetMonth {
     }
 
     public void addNewCategoryBudgetIfNew(String category, double budget) {
+        if (categories.keySet().contains(category)){
+            return;
+        }
         categories.put(category, budget);
     }
 
@@ -53,5 +57,9 @@ public class BudgetMonth {
         ArrayList<String> listOfCategories =  new ArrayList<>();
         listOfCategories.addAll(categories.keySet());
         return listOfCategories;
+    }
+
+    public double getAmountSpendingFormonth() {
+        return amountSpendingFormonth;
     }
 }
