@@ -1,10 +1,12 @@
 package core.usecases;
 
-import core.Dto.MonthRequestMessage;
-import core.Dto.MonthResponseMessage;
+import core.Dto.Month.MonthRequestMessage;
+import core.Dto.Month.MonthKeys;
+import core.Dto.Month.MonthResponseMessage;
 import core.entities.BudgetMonth;
 import core.gateways.BudgetMonthRepository;
 import core.gateways.IRequestHandler;
+import core.util.MonthComparer;
 import core.util.MonthGrapher;
 
 import java.util.HashMap;
@@ -16,6 +18,10 @@ import java.util.HashMap;
 public class GetBudgetMonth implements IRequestHandler<MonthRequestMessage,MonthResponseMessage> {
     private BudgetMonthRepository repository;
 
+    public GetBudgetMonth(BudgetMonthRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public MonthResponseMessage handleRequest(MonthRequestMessage request) {
         if (request.monthsToCompare().length == 1)
@@ -24,6 +30,7 @@ public class GetBudgetMonth implements IRequestHandler<MonthRequestMessage,Month
     }
 
     private MonthResponseMessage createResponseFormMonths(String[] strings) {
+        MonthComparer.getComparisonDataFromMonths(strings);
         return null;
     }
 
@@ -33,10 +40,14 @@ public class GetBudgetMonth implements IRequestHandler<MonthRequestMessage,Month
         HashMap<String, String> responseData = new HashMap<>();
         if (request.needsMonthGraphData()){
             MonthGrapher grapher = new MonthGrapher(requestedMonth);
-            grapher.graphPercentageOfCategories();
-
+            String overViewData = grapher.graphBudgetOverview().toString();
+            responseData.put(MonthKeys.OVERVIEW.getName(), overViewData);
+            String categoryData = grapher.graphPercentageOfCategories().toString();
+            responseData.put(MonthKeys.CATEGORY_SPENT.getName(), categoryData);
         }
+        responseData.put(MonthKeys.MONTHLY_BUDGET.getName(), String.valueOf(requestedMonth.getAmountSpendingFormonth()));
+        responseData.put(MonthKeys.DATE.getName(), requestedMonth.getMonthDate());
 
-        return new MonthResponseMessage();
+        return new MonthResponseMessage(responseData);
     }
 }
