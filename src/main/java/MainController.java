@@ -33,7 +33,7 @@ public class MainController implements Initializable {
     @FXML
     private ResourceBundle resources;
     @FXML
-    protected Label test1;
+    protected Label totalBudgetLabel;
     @FXML
     protected Label test2;
 
@@ -44,6 +44,8 @@ public class MainController implements Initializable {
 
     private Stage stage;
 
+    @FXML
+    protected TableView latestPerchaseTable;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
@@ -68,6 +70,7 @@ public class MainController implements Initializable {
             alert.show();
 
         }
+
     }
     /**
      * Initializes the controller class.
