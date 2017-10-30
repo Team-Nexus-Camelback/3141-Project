@@ -29,13 +29,15 @@ public class MainController implements Initializable {
     @FXML
     private ResourceBundle resources;
     @FXML
-    protected Label test1;
+    protected Label totalBudgetLabel;
     @FXML
     protected Label test2;
     @FXML
     protected ChoiceBox<String> categoryBox;
     @FXML
     protected TextField amount;
+    @FXML 
+    protected TableView latestPerchaseTable;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
@@ -47,14 +49,7 @@ public class MainController implements Initializable {
     
     @FXML
     protected void addPressed(ActionEvent e) throws IOException{
-    	test1.setText(categoryBox.getValue());
-    	Double numericValue;
-    	if (categoryBox.getValue().equals("Purchase Category")) {
-    		numericValue = 0.0 - Double.parseDouble(amount.getText());
-    	}
-    	else
-    		numericValue = Double.parseDouble(amount.getText());
-    	test2.setText(numericValue.toString());
+    	
     }
     /**
      * Initializes the controller class.
