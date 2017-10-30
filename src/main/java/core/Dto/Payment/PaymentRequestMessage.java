@@ -1,4 +1,4 @@
-package core.Dto;
+package core.Dto.Payment;
 
 import core.gateways.IRequest;
 

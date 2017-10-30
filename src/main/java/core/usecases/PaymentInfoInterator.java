@@ -1,7 +1,7 @@
 package core.usecases;
 
-import core.Dto.PaymentRequestMessage;
-import core.Dto.PaymentResponseMessage;
+import core.Dto.Payment.PaymentRequestMessage;
+import core.Dto.Payment.PaymentResponseMessage;
 import core.entities.Payment;
 import core.gateways.IRequestHandler;
 import core.gateways.PaymentRepository;
