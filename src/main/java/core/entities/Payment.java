@@ -13,9 +13,9 @@ public class Payment {
 	private double Value = 0;
 	private boolean Status = false;
 	private String category = null;
-	private int Due = 00000000;
+	private String Due = null;
 	
-	public Payment(int id, double Value, boolean Status, String category, int Due) {
+	public Payment(int id, double Value, boolean Status, String category, String Due) {
 		this.id = id;
 		this.Value = Value;
 		this.Status = Status;
@@ -44,7 +44,7 @@ public class Payment {
 	}
 	
 	//returns the due date for the payment stored as an int value mm/dd/yyyy ex: 03201995 
-	public int getDueDate() {
+	public String getDueDate() {
 		return this.Due;
 	}
 }

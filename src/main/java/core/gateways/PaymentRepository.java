@@ -2,6 +2,7 @@ package core.gateways;
 
 import core.entities.Payment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface PaymentRepository {
      * 
      * @return a list of payments that are unpaid
      */
-    List<Payment> getUnFinishedPayments();
+    ArrayList<Payment> getUnFinishedPayments();
 
     /**
      * Get a payment by looking it up with its unique id
