@@ -37,7 +37,7 @@ public class MainController implements Initializable {
     @FXML
     protected TextField amount;
     @FXML 
-    protected TableView latestPerchaseTable;
+    protected TableView latestPurchaseTable;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);

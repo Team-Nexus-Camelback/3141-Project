@@ -114,7 +114,7 @@
                                                         <Font size="26.0" />
                                                     </font>
                                                 </Label>
-                                                <TableView fx:id="latestPerchaseTable" GridPane.rowIndex="1">
+                                                <TableView fx:id="latestPurchaseTable" GridPane.rowIndex="1">
                                                     
                                                 </TableView>
                                             </children>
