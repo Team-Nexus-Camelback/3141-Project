@@ -33,7 +33,7 @@ public class MainController implements Initializable {
     @FXML
     private ResourceBundle resources;
     @FXML
-    protected Label test1;
+    protected Label totalBudgetLabel;
     @FXML
     protected Label test2;
 
@@ -41,6 +41,9 @@ public class MainController implements Initializable {
     protected ChoiceBox<String> categoryBox;
     @FXML
     protected TextField amount;
+
+    @FXML 
+    protected TableView latestPerchaseTable;
 
     private Stage stage;
 
@@ -56,6 +59,8 @@ public class MainController implements Initializable {
     
     @FXML
     protected void addPressed(ActionEvent e) throws IOException{
+
+    	
 //    	test1.setText(categoryBox.getValue());
 //    	test2.setText(amount.getText());
         if (categoryBox.getValue().equals("Purchase Category")) {
@@ -68,6 +73,7 @@ public class MainController implements Initializable {
             alert.show();
 
         }
+
     }
     /**
      * Initializes the controller class.
