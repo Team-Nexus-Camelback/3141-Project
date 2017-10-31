@@ -17,9 +17,9 @@
       		</FXCollections>
       	</items>
       </ChoiceBox>
-      <TextField layoutX="240.0" layoutY="270.0" prefHeight="31.0" prefWidth="229.0" />
+      <TextField layoutX="240.0" layoutY="270.0" prefHeight="31.0" prefWidth="229.0" fx:id="amount" />
       <Label layoutX="96.0" layoutY="233.0" text="Category" />
-      <Label layoutX="328.0" layoutY="233.0" text="Amount" />
+      <Label layoutX="328.0" layoutY="233.0" text="Amount"  />
       <Button layoutX="499.0" layoutY="270.0" mnemonicParsing="false" onAction="#addPressed" text="Add" />
    </children>
 </AnchorPane>
