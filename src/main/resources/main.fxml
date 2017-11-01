@@ -116,14 +116,25 @@
                                                     </font>
                                                 </Label>
                                                 <TableView fx:id="latestPurchaseTable" GridPane.rowIndex="1">
-                                                    
+                                                <!-- For stuff to update table of purchases -->
                                                 </TableView>
                                             </children>
                                         </GridPane> 
                                       </items>
                                     </SplitPane>
+                                     <TableView fx:id="billsDue" GridPane.rowIndex="2">
+                                         <!-- For stuff to update table of Bills Due -->
+                                     </TableView>
                                  </children>
                               </GridPane>
+                           <GridPane>
+                               <columnConstraints>
+                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="450.0" prefWidth="450.0" />
+                               </columnConstraints>
+                               <rowConstraints>
+
+                               </rowConstraints>
+                           </GridPane>
                            </children>
                         </GridPane>
                      </center>

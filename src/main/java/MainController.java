@@ -39,6 +39,8 @@ public class MainController implements Initializable {
     @FXML 
     protected TableView latestPerchaseTable;
     @FXML
+    protected TableView billsDue;
+    @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
             Stage stage = new Stage();
