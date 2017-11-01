@@ -10,7 +10,7 @@ import core.gateways.Storage;
 public class StorageTest {
 
 	//ID will always need to be unique for each payment entered
-	private int idtest = 1;		//so change this every run at least
+	private int idtest = 4;		//so change this every run at least
 	private double valuetest = 399.04;
 	private boolean statustest = false;
 	private String categorytest = "Gas";
@@ -47,7 +47,6 @@ public class StorageTest {
 	@Test
 	public void listTest() {
 		Storage store = new Storage();
-		Payment paymentTemp;
 		assertTrue(store.getUnFinishedPayments().get(0).getStatus() == false);
 	}
 }

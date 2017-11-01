@@ -48,31 +48,31 @@ public class Storage implements PaymentRepository {
 	Properties storeCategory = new Properties();
 	Properties storePaid = new Properties();
 
-	
-	//Returns an arraylist of payments that are not paid (failed status) yet.
+	// Returns an arraylist of payments that are not paid (failed status) yet.
 	@Override
-	public ArrayList<Payment> getUnFinishedPayments() {
+	public List<Payment> getUnFinishedPayments() {
+		// initialize arraylist that is returned at the end
 		ArrayList<Payment> paylist = new ArrayList<Payment>();
 		try {
-			
+
 			// inputstream
 			inputPaid = new FileInputStream(paidFile);
 
 			// load the properties file that holds the paid status for each payment
 			storePaid.load(inputPaid);
 
-			//store the keys into an array to get the id's of payments
+			// store the keys into an array to get the id's of payments
 			String[] idarray = new String[storePaid.keySet().size()];
 			storePaid.keySet().toArray(idarray);
-			
-			//check each id to see if the value is false then add to payments list
-			//by using the paymentByID() method to get the payment
-			for(int i = 0; i < idarray.length; i++) {
-				if(storePaid.getProperty(idarray[i]).equals("false")) {
+
+			// check each id to see if the value is false then add to payments list
+			// by using the paymentByID() method to get the payment
+			for (int i = 0; i < idarray.length; i++) {
+				if (storePaid.getProperty(idarray[i]).equals("false")) {
 					paylist.add(paymentByID(Integer.parseInt(idarray[i])));
 				}
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -176,11 +176,6 @@ public class Storage implements PaymentRepository {
 			}
 		}
 		return true;
-	}
-
-	// remove a payment from the data by using its id
-	public void removePayment(int id) {
-		// TODO: method to remove payments using a payment id
 	}
 
 	// returns the value of the payment with id
