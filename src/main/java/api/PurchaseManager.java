@@ -4,7 +4,7 @@ package api;
 import core.Dto.PurchaseCreationRequest;
 
 import core.usecases.CreatePurchaseInteractor;
-import datastorage.SimpleBudgetRepo;
+//import datastorage.SimpleBudgetRepo;
 
 import java.util.Hashtable;
 
@@ -24,7 +24,7 @@ public class PurchaseManager {
 
     private PurchaseManager() {
         // this is a temporary setup for this class
-        purchaseInteractor = new CreatePurchaseInteractor(new SimpleBudgetRepo());
+       // purchaseInteractor = new CreatePurchaseInteractor(new SimpleBudgetRepo());
     }
 
     public Hashtable<String, String> savePurchaseData(int id, String category, float amount){

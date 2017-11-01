@@ -15,6 +15,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
@@ -40,6 +41,10 @@ public class MainController implements Initializable {
     protected TableView latestPerchaseTable;
     @FXML
     protected TableView billsDue;
+    @FXML
+    protected TableView changesTable;
+    @FXML
+    protected PieChart purchasesPie;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);

@@ -17,7 +17,7 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
 
     private BudgetMonthRepository monthRepository;
     private PurchaseFactory purchaseFactory = new PurchaseFactory();
-    private BudgetMonth currentWorkingMonth = new BudgetMonth("00-0000"); // starts out with an impossible value
+    private BudgetMonth currentWorkingMonth;// = new BudgetMonth("00-0000"); // starts out with an impossible value
 
     public CreatePurchaseInteractor(BudgetMonthRepository monthRepository) {
         this.monthRepository = monthRepository;
