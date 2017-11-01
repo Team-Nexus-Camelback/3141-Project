@@ -51,8 +51,8 @@ public class Payment {
         return amount;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public String getDueDate() {
+        return dueDate.toString();
     }
 
     public int getId() {
