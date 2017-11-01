@@ -1,7 +1,5 @@
 package core.entities;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;

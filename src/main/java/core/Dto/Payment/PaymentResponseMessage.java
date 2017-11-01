@@ -1,6 +1,5 @@
 package core.Dto.Payment;
 
-import core.entities.Payment;
 import core.gateways.ResponseMessage;
 
 import java.util.HashMap;
@@ -11,12 +10,17 @@ import java.util.List;
  * how a payment request will be responded too
  */
 public class PaymentResponseMessage extends ResponseMessage<List<HashMap<String, String>>> {
-    private List<HashMap<String, String>> payments;
+
+    public PaymentResponseMessage(List<HashMap<String, String>> message) {
+        this.message = message;
+    }
 
     @Override
     public List<HashMap<String, String>> getMessage() {
-        return payments;
+        return message;
     }
+
+
 
 
 }
