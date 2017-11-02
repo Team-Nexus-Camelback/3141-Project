@@ -17,6 +17,7 @@ class MonthManagerTest {
         String testMonthDate = "10-2017";
         HashMap<String, String> getData = MonthManager.getInstance().getMonthData(testMonthDate);
         assertTrue(getData.get(MonthKeys.DATE.getName()).equals("10-2017"));
+        MonthManager.getInstance().getLastestPurchase();
     }
 
 }

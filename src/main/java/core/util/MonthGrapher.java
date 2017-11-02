@@ -3,12 +3,9 @@ package core.util;
 import core.entities.BudgetMonth;
 import core.entities.Purchase;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Created by ryan on 10/23/17.
@@ -58,7 +55,7 @@ public class MonthGrapher {
 
     private void addUnallocatedCatIfNeeded(HashMap<String, Double> graphData) {
         double categorySum = sumOfCategoryInBudget(graphData);
-        if (month.getAmountSpendingFormonth() == categorySum ){
+        if (month.getAmountSpendingForMonth() == categorySum ){
             return;
         }
         double unallocatedPercent = Double.parseDouble(String.format("%.2f", (1 - categorySum)));
@@ -74,7 +71,7 @@ public class MonthGrapher {
 
     private double calculateCategoryPercentInBudget(String category) {
         double categoryPercent = month.categoryBudget(category);
-        double overallBugetAmount = month.getAmountSpendingFormonth();
+        double overallBugetAmount = month.getAmountSpendingForMonth();
         return Double.parseDouble(String.format("%.2f",categoryPercent / overallBugetAmount));
     }
 }

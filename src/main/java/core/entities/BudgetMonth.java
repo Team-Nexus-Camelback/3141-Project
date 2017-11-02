@@ -1,7 +1,5 @@
 package core.entities;
 
-import core.util.MonthGrapher;
-
 import java.util.*;
 
 /**
@@ -9,18 +7,22 @@ import java.util.*;
  */
 public class BudgetMonth {
     private ArrayList<Purchase> purchasesList = new ArrayList<>();
+    private ArrayList<Payment> paymentList = new ArrayList<>();
     private String monthDate;
     private HashMap<String, Double> categories = new HashMap<>();
-    private double amountSpendingFormonth;
+    private double amountSpendingForMonth;
 
     public BudgetMonth(String date, double allocateMoney) {
         this.monthDate = date;
-        this.amountSpendingFormonth = allocateMoney;
+        this.amountSpendingForMonth = allocateMoney;
     }
 
     public void addPurchase(Purchase purchase){
+        addNewCategoryBudgetIfNew(purchase.getCategory(), purchase.getAmount());
         purchasesList.add(purchase.getId(), purchase);
     }
+
+    public void addPayment(Payment payment){}
 
     public void addNewCategoryBudgetIfNew(String category, double budget) {
         if (categories.keySet().contains(category)){
@@ -59,7 +61,19 @@ public class BudgetMonth {
         return listOfCategories;
     }
 
-    public double getAmountSpendingFormonth() {
-        return amountSpendingFormonth;
+    public double getAmountSpendingForMonth() {
+        return amountSpendingForMonth;
+    }
+
+    public List<Purchase> getMostRecentPurchase(int numberOfPurchase){
+        if (numberOfPurchase < 0)
+            return purchasesList;
+        purchasesList.sort(new Comparator<Purchase>() {
+            @Override
+            public int compare(Purchase o1, Purchase o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+        return purchasesList.subList(0, numberOfPurchase - 1);
     }
 }
