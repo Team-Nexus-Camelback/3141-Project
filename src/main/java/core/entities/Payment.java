@@ -21,7 +21,7 @@ public class Payment {
      *
      * @param paymentName
      * @param amount
-     * @param dueDate should be in the format of dd-mm-yyyy;
+     * @param dueDate should be in the format of M/d/yy;
      */
     public Payment(int id, String paymentName, double amount, String dueDate) throws ParseException {
         this.id = id;
@@ -31,7 +31,7 @@ public class Payment {
     }
 
     private Date getDateFromString(String dueDateString) throws ParseException {
-        return DateFormat.getInstance().parse(dueDateString);
+        return DateFormat.getDateInstance(DateFormat.SHORT).parse(dueDateString);
     }
 
     public int daysTillDueDate(){

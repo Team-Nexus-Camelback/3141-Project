@@ -13,6 +13,12 @@ public class PaymentResponseMessage extends ResponseMessage<List<HashMap<String,
 
     public PaymentResponseMessage(List<HashMap<String, String>> message) {
         this.message = message;
+        this.successful = true;
+    }
+
+    public PaymentResponseMessage(List<HashMap<String, String>> message, boolean messageOkay) {
+        successful = messageOkay;
+        this.message = message;
     }
 
     @Override
