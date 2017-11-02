@@ -46,6 +46,14 @@ public class MainController implements Initializable {
     @FXML
     protected PieChart purchasesPie;
     @FXML
+    protected TextField dateField;
+    @FXML
+    protected TextField amountField;
+    @FXML
+    protected TextField nameField;
+    @FXML
+    protected TextField categoryField;
+    @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
             Stage stage = new Stage();
@@ -55,8 +63,12 @@ public class MainController implements Initializable {
     }
     
     @FXML
-    protected void addPressed(ActionEvent e) throws IOException{
-    	
+    protected void addPurchaseEvent(ActionEvent e) throws IOException{
+    	api.PurchaseManager.getInstance().savePurchaseData(123,categoryField.getText(),Float.parseFloat(amountField.getText()));
+    	dateField.setText("Date");
+    	categoryField.setText("Category");
+    	amountField.setText("Amount");
+    	nameField.setText("Name");
     }
     /**
      * Initializes the controller class.

@@ -113,25 +113,40 @@
                                                     <NumberAxis side="LEFT" />
                                                   </yAxis>
                                                 </BarChart>
-                                             </center></BorderPane>
-                                        <GridPane>
-                                            <columnConstraints>
-                                                <ColumnConstraints minWidth="200" prefWidth="200"/>
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="450.0" minHeight="450.0" prefHeight="450.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                            <children>
-                                                <Label text="Latest" GridPane.halignment="CENTER">
-                                                    <font>
-                                                        <Font size="26.0" />
-                                                    </font>
-                                                </Label>
-                                                <TableView fx:id="latestPurchaseTable" prefHeight="139.0" prefWidth="220.0" GridPane.rowIndex="1">
-                                                <!-- For stuff to update table of purchases -->
-                                                </TableView>
-                                            </children>
+                                             </center>
+                                            <bottom>
+                                                <Button text="Add" onAction="#addPurchaseEvent">
+                                                </Button>
+                                            </bottom>
+                                        </BorderPane>
+                                        <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
+                                            <padding>
+                                                <Insets bottom="5.0" left="0" right="0" top="5.0"/>
+                                            </padding>
+                                            <Label style="-fx-font: NORMAL 20 Tahoma;" text="Latest"
+                                                   GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                            </Label>
+                                            <TableView fx:id="latestPerchaseTable" GridPane.columnIndex="0"
+                                                       GridPane.rowIndex="1">
+                                                <columns>
+                                                    <TableColumn text="Date" prefWidth="60.0">
+                                                    </TableColumn>
+                                                    <TableColumn text="Name" prefWidth="150.0">
+                                                    </TableColumn>
+                                                    <TableColumn text="Amount" prefWidth="75.0">
+                                                    </TableColumn>
+                                                    <TableColumn text="Category" prefWidth="100.0">
+                                                    </TableColumn>
+                                                </columns>
+                                            </TableView>
+                                            <HBox spacing="10" alignment="bottom_right" GridPane.columnIndex="0"
+                                                  GridPane.rowIndex="2">
+                                                <TextField fx:id="dateField" promptText="Date" prefWidth="60.0"/>
+                                                <TextField fx:id="nameField" promptText="Name" prefWidth="150.0"/>
+                                                <TextField fx:id="amountField" promptText="Amount" prefWidth="75.0"/>
+                                                <TextField fx:id="categoryField" promptText="Category" prefWidth="90.0"/>
+                                                <Button text="+" onAction="#addPurchaseEvent"/>
+                                            </HBox>
                                         </GridPane> 
                                       </items>
                                     </SplitPane>
