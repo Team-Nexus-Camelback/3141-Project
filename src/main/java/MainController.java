@@ -48,7 +48,7 @@ public class MainController implements Initializable {
     protected TextField amount;
 
     @FXML 
-    protected TableView<Purchase> latestPerchaseTable  = new TableView<>();
+    protected TableView<Purchase> latestPerchaseTable;
 
     @FXML
     protected TableView billsDue;
@@ -67,8 +67,6 @@ public class MainController implements Initializable {
 
     final ObservableList<Purchase> data = FXCollections.observableArrayList(new Purchase(10.99f, "Today", "Hello", "World"));
 
-    @FXML
-    protected TableView latestPerchaseTable;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
