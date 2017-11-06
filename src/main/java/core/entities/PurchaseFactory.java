@@ -1,6 +1,6 @@
 package core.entities;
 
-import core.Dto.PurchaseCreationRequest;
+import core.Dto.Purchase.PurchaseCreationRequest;
 
 /**
  * Created by ryan on 10/18/17.

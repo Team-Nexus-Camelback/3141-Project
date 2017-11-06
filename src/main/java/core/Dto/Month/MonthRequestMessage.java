@@ -8,9 +8,14 @@ import core.gateways.IRequest;
 public class MonthRequestMessage implements IRequest {
     private boolean needsGraph;
     private String[] monthsToCompare;
+    private int purchaseToGet;
 
     public boolean needsMonthGraphData(){
         return needsGraph;
+    }
+
+    public int getPurchaseToGet() {
+        return purchaseToGet;
     }
 
     public String[] monthsToCompare(){
@@ -24,5 +29,12 @@ public class MonthRequestMessage implements IRequest {
     public MonthRequestMessage(boolean needsGraph, String ... monthsToCompare) {
         this.needsGraph = needsGraph;
         this.monthsToCompare = monthsToCompare;
+        this.purchaseToGet = -1;
+    }
+
+    public MonthRequestMessage(boolean needsGraph, int purchaseToGet,  String ... monthsToCompare) {
+        this.needsGraph = needsGraph;
+        this.monthsToCompare = monthsToCompare;
+        this.purchaseToGet = purchaseToGet;
     }
 }

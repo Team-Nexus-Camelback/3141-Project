@@ -12,7 +12,7 @@
       <ChoiceBox fx:id="categoryBox" layoutX="51.0" layoutY="270.0" prefWidth="150.0" value="Choose Category">
       	<items>
       		<FXCollections fx:factory="observableArrayList">
-      			<String fx:value="Purchase Category" />
+      			<String fx:value="models.Purchase Category" />
       			<String fx:value="Credit Category" />
       		</FXCollections>
       	</items>

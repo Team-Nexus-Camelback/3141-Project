@@ -1,7 +1,7 @@
 package core.usecases;
 
-import core.Dto.PurchaseCreationRequest;
-import core.Dto.PurchaseResponseMessage;
+import core.Dto.Purchase.PurchaseCreationRequest;
+import core.Dto.Purchase.PurchaseResponseMessage;
 import core.entities.BudgetMonth;
 import core.entities.Purchase;
 import core.entities.PurchaseFactory;
@@ -17,7 +17,7 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
 
     private BudgetMonthRepository monthRepository;
     private PurchaseFactory purchaseFactory = new PurchaseFactory();
-    private BudgetMonth currentWorkingMonth = new BudgetMonth("00-0000"); // starts out with an impossible value
+    private BudgetMonth currentWorkingMonth = new BudgetMonth("00-0000", -1337); // starts out with an impossible value
 
     public CreatePurchaseInteractor(BudgetMonthRepository monthRepository) {
         this.monthRepository = monthRepository;
