@@ -1,4 +1,4 @@
-package core.Dto;
+package core.Dto.Purchase;
 
 import core.gateways.IRequest;
 

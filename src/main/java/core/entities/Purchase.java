@@ -1,10 +1,14 @@
 package core.entities;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by ryan on 10/17/17.
  */
 public class Purchase {
     private float amount;
+    private Date purchaseDate;
     private String purchaseName;
     private String category;
     private int id;
@@ -13,6 +17,9 @@ public class Purchase {
         this.id = id;
         this.amount = amount;
         this.category = category;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        this.purchaseDate = calendar.getTime();
     }
 
     public float getAmount() {
@@ -29,5 +36,15 @@ public class Purchase {
 
     public int getId() {
         return id;
+    }
+
+    public Date getDate(){
+        return purchaseDate;
+    }
+
+    @Override
+    public String toString() {
+        return "id:" + id + " name:" + purchaseName + " category:" + category + " amount:" + amount
+                    + " date:" + purchaseDate.toString();
     }
 }

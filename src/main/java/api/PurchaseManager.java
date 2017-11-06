@@ -1,12 +1,17 @@
 package api;
 // TODO create a better name for this class
 
-import core.Dto.PurchaseCreationRequest;
+import core.Dto.Purchase.PurchaseCreationRequest;
 
+import core.entities.BudgetMonth;
+import core.gateways.BudgetMonthRepository;
 import core.usecases.CreatePurchaseInteractor;
-//import datastorage.SimpleBudgetRepo;
+
+import models.Purchase;
+
 
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * Created by ryan on 10/18/17.
@@ -15,7 +20,22 @@ import java.util.Hashtable;
 public class PurchaseManager {
     private static PurchaseManager ourInstance = new PurchaseManager();
 
-    private CreatePurchaseInteractor purchaseInteractor;
+    private CreatePurchaseInteractor purchaseInteractor = new CreatePurchaseInteractor(new BudgetMonthRepository() {
+        @Override
+        public BudgetMonth getMonthFromDate(String date) {
+            return new BudgetMonth("2/11/2017", 5000);
+        }
+
+        @Override
+        public boolean saveBudgetMonth(BudgetMonth month) {
+            return false;
+        }
+
+        @Override
+        public List<BudgetMonth> monthsFromYear(String year) {
+            return null;
+        }
+    });
 
 
     public static PurchaseManager getInstance() {
@@ -24,13 +44,13 @@ public class PurchaseManager {
 
     private PurchaseManager() {
         // this is a temporary setup for this class
-       // purchaseInteractor = new CreatePurchaseInteractor(new SimpleBudgetRepo());
+
     }
 
-    public Hashtable<String, String> savePurchaseData(int id, String category, float amount){
+    public Purchase savePurchaseData(int id, String category, float amount){
         PurchaseCreationRequest createRequest = new PurchaseCreationRequest(id, String.valueOf(amount), category, "10/18/2017");
-        return purchaseInteractor.handleRequest(createRequest).getMessage();
+        Hashtable<String, String> data = purchaseInteractor.handleRequest(createRequest).getMessage();
+        return new Purchase(Float.parseFloat(data.get("amount")),"11/3/2017",
+                data.get("category"), "Name");
     }
-
-
 }

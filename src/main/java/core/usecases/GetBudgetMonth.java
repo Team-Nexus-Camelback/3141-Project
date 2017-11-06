@@ -45,8 +45,9 @@ public class GetBudgetMonth implements IRequestHandler<MonthRequestMessage,Month
             String categoryData = grapher.graphPercentageOfCategories().toString();
             responseData.put(MonthKeys.CATEGORY_SPENT.getName(), categoryData);
         }
-        responseData.put(MonthKeys.MONTHLY_BUDGET.getName(), String.valueOf(requestedMonth.getAmountSpendingFormonth()));
+        responseData.put(MonthKeys.MONTHLY_BUDGET.getName(), String.valueOf(requestedMonth.getAmountSpendingForMonth()));
         responseData.put(MonthKeys.DATE.getName(), requestedMonth.getMonthDate());
+        responseData.put(MonthKeys.PURCHASES.getName(), requestedMonth.getMostRecentPurchase(request.getPurchaseToGet()).toString());
 
         return new MonthResponseMessage(responseData);
     }
