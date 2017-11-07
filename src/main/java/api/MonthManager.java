@@ -8,9 +8,14 @@ import core.gateways.BudgetMonthRepository;
 import core.usecases.GetBudgetMonth;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import models.Month;
+import models.Payment;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * Created by ryan on 10/27/17.
@@ -22,6 +27,11 @@ public class MonthManager {
         public BudgetMonth getMonthFromDate(String date) {
             BudgetMonth test = new BudgetMonth("10-2017", 1000);
             test.addPurchase(new Purchase(0, 100, "Happy"));
+            try {
+                test.addPayment(new core.entities.Payment(0, "Taxes", 300, "11/4/17"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return test;
         }
 
@@ -49,42 +59,99 @@ public class MonthManager {
         return getBudgetMonth.handleRequest(request).getMessage();
     }
 
-    public HashMap<String, String> getMonthData(String monthDate){
+    public Month getMonthData(String monthDate){
         MonthRequestMessage request = new MonthRequestMessage(true, monthDate);
         lastRequestData = getBudgetMonth.handleRequest(request).getMessage();
-        return lastRequestData;
+        return translateResponseToModel(lastRequestData);
     }
 
     public void compareMonthsData(String ... monthsToCompare){
         MonthRequestMessage requestMessage = new MonthRequestMessage(true, monthsToCompare);
     }
 
-    public HashMap<String, ObservableList<String>> getLastestPurchase(){
-        HashMap<String, ObservableList<String>> listHashMap = new HashMap<>();
-        String purchasesData = lastRequestData.get(MonthKeys.PURCHASES.getName());
+    private Month translateResponseToModel(HashMap<String, String> response){
+        List<models.Purchase> purchases = purchaseFromResponse(response.get(MonthKeys.PURCHASES.getName()));
+        String monthDate = response.get(MonthKeys.DATE.getName());
+        Double bugetAmount = Double.parseDouble(response.get(MonthKeys.MONTHLY_BUDGET.getName()));
+        List<Payment> payments = paymentsFromResponse(response.get(MonthKeys.PAYMENTS.getName()));
+        return null;
+    }
+
+    private List<models.Purchase> purchaseFromResponse(String purchasesData) {
         purchasesData = purchasesData.replace("[", "");
         purchasesData = purchasesData.replace("]", "");
-        String[] purchases = purchasesData.split(",");
-        for (String purchase : purchases){
-            String[] dataValues = purchase.split(" ");
-            String value;
-            for (String data : dataValues){
-                switch (data){
-                    case "id":
-                        listHashMap.put(data, FXCollections.observableArrayList());
-                    case "name":
-                        listHashMap.put(data, FXCollections.observableArrayList());
-                    case "category":
-                        listHashMap.put(data, FXCollections.observableArrayList());
-                    case "amount":
-                        listHashMap.put(data, FXCollections.observableArrayList());
-                    case "date":
-                        listHashMap.put(data, FXCollections.observableArrayList());
-                    default:
-                       listHashMap.get(data).add(data);
-                }
+        ArrayList<models.Purchase> purchaseArrayList = new ArrayList<>();
+        models.Purchase newPurchase = createPurchaseFromString(purchasesData);
+        purchaseArrayList.add(newPurchase);
+        return purchaseArrayList;
+    }
+
+    private models.Purchase createPurchaseFromString(String purchase) {
+        String[] dataValues = purchase.split(" ");
+        String name = "";
+        float amount = 0.0f;
+        String date = "";
+        String category = "";
+
+        for (int i = 0; i < dataValues.length; i++) {
+            switch (dataValues[i]) {
+                case "name":
+                    name = dataValues[i + 1];
+                    break;
+                case "amount":
+                    amount = Float.parseFloat(dataValues[i + 1]);
+                    break;
+                case "date":
+                    date = dataValues[i + 1];
+                    break;
+                case "category":
+                    category = dataValues[i + 1];
+                    break;
+                default:
             }
         }
-        return listHashMap;
+        return new models.Purchase(amount, date, category, name);
+    }
+
+    private List<Payment> paymentsFromResponse(String paymentData){
+        paymentData = paymentData.replace("[", "");
+        paymentData = paymentData.replace("]", "");
+        String[] payments = paymentData.split(",");
+        ArrayList<Payment> paymentArrayList = new ArrayList<>();
+        for (String payment : payments){
+            Payment newPayment = createPaymentFromString(payment);
+            paymentArrayList.add(newPayment);
+        }
+        return paymentArrayList;
+    }
+
+    private Payment createPaymentFromString(String payments){
+        String[] dataValues = payments.split(" ");
+        String name = "";
+        double amount = 0.0;
+        String date = "";
+        boolean isPaid = false;
+        for (int i = 0; i < dataValues.length; i++){
+            switch (dataValues[i]){
+                case "paymentName":
+                    name = dataValues[i+1];
+                    break;
+                case "amount":
+                    amount = Double.parseDouble(dataValues[i+1]);
+                    break;
+                case "dueDate":
+                    date = dataValues[i+1];
+                    break;
+                case "isPaid":
+                    isPaid = Boolean.parseBoolean(dataValues[i+1]);
+                    break;
+            }
+        }
+        try {
+            return new Payment(name, amount, date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
