@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import models.Purchase;
+import models.Month;
 
 /**
  * FXML Controller class
@@ -62,6 +63,8 @@ public class MainController implements Initializable {
 
     final ObservableList<Purchase> data = FXCollections.observableArrayList();
 
+    final ObservableList<Month> bcData = FXCollections.observableArrayList();
+
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
@@ -81,6 +84,13 @@ public class MainController implements Initializable {
     	amountField.setText("Amount");
     	nameField.setText("Name");
 
+    }
+    public void saveData(){
+        //Save function calls
+        Alert saved = new Alert(Alert.AlertType.INFORMATION);
+        saved.setHeaderText(null);
+        saved.setContentText("Your data has been saved!");
+        saved.showAndWait();
     }
     /**
      * Initializes the controller class.

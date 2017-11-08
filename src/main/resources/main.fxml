@@ -23,7 +23,7 @@
 				<!--Open exiting budget file-->
                   <MenuItem mnemonicParsing="false" text="Open" />
 				  <!--Save the current budget-->
-                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem onAction="#saveData" mnemonicParsing="false" text="Save" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
