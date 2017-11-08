@@ -48,6 +48,7 @@ public class GetBudgetMonth implements IRequestHandler<MonthRequestMessage,Month
         responseData.put(MonthKeys.MONTHLY_BUDGET.getName(), String.valueOf(requestedMonth.getAmountSpendingForMonth()));
         responseData.put(MonthKeys.DATE.getName(), requestedMonth.getMonthDate());
         responseData.put(MonthKeys.PURCHASES.getName(), requestedMonth.getMostRecentPurchase(request.getPurchaseToGet()).toString());
+        responseData.put(MonthKeys.PAYMENTS.getName(), requestedMonth.getUnfinishedPayments().toString());
 
         return new MonthResponseMessage(responseData);
     }

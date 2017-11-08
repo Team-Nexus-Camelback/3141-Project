@@ -1,5 +1,6 @@
 package core.entities;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,7 +45,7 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return "id:" + id + " name:" + purchaseName + " category:" + category + " amount:" + amount
-                    + " date:" + purchaseDate.toString();
+        return "id " + id + " name " + purchaseName + " category " + category + " amount " + amount
+                    + " date " + DateFormat.getInstance().format(purchaseDate);
     }
 }

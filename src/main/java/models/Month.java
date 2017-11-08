@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ryan on 11/5/17.
@@ -20,13 +21,18 @@ public class Month {
     private SimpleListProperty<Payment> payments;
     private SimpleMapProperty<String, Double> categories;
 
-    public Month(String date, double budgetAmount, HashMap<String, Double> categories) {
+    public Month(String date, double budgetAmount,
+                 HashMap<String, Double> categories,
+                 List<Purchase> purchases, List<Payment> payments)
+    {
         this.monthDate = new SimpleStringProperty(date);
         this.spendingAmount = new SimpleDoubleProperty(budgetAmount);
         ObservableMap<String, Double> observableMap = FXCollections.observableMap(categories);
         this.categories = new SimpleMapProperty<>(observableMap);
-
-
+        ObservableList<Purchase> purchaseObservableList = FXCollections.observableArrayList(purchases);
+        this.purchases = new SimpleListProperty<>(purchaseObservableList);
+        ObservableList<Payment> paymentObservableList = FXCollections.observableList(payments);
+        this.payments = new SimpleListProperty<>(paymentObservableList);
     }
 
     public String getMonthDate() {

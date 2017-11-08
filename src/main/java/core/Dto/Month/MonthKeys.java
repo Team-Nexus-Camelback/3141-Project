@@ -9,6 +9,7 @@ public enum MonthKeys {
     DATE("date"),
     OVERVIEW("overview"),
     CATEGORY_SPENT("categories"),
+    PAYMENTS("payments"),
     PURCHASES("purchases");
 
     private String keyName;
