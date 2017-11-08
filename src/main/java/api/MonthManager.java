@@ -74,7 +74,25 @@ public class MonthManager {
         String monthDate = response.get(MonthKeys.DATE.getName());
         Double bugetAmount = Double.parseDouble(response.get(MonthKeys.MONTHLY_BUDGET.getName()));
         List<Payment> payments = paymentsFromResponse(response.get(MonthKeys.PAYMENTS.getName()));
-        return null;
+        HashMap<String, Double> categoryGraph = getCategoryGraphFromResponse(response.get(MonthKeys.CATEGORY_SPENT.getName()));
+        return new Month(monthDate, bugetAmount, categoryGraph, purchases, payments);
+    }
+
+    private HashMap<String,Double> getCategoryGraphFromResponse(String s) {
+        s = s.replace("[", "");
+        s = s.replace("]", "");
+        String categories[] = s.split(",");
+        HashMap<String, Double> returnMap = new HashMap<>();
+        String keyname = "";
+        for (String cat : categories){
+            try{
+                double percent = Double.parseDouble(cat);
+                returnMap.put(keyname, percent);
+            }catch (Exception e){
+                keyname = cat;
+            }
+        }
+        return returnMap;
     }
 
     private List<models.Purchase> purchaseFromResponse(String purchasesData) {
