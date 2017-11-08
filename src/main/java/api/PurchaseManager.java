@@ -6,7 +6,9 @@ import core.Dto.Purchase.PurchaseCreationRequest;
 import core.entities.BudgetMonth;
 import core.gateways.BudgetMonthRepository;
 import core.usecases.CreatePurchaseInteractor;
+
 import models.Purchase;
+
 
 import java.util.Hashtable;
 import java.util.List;
@@ -42,7 +44,7 @@ public class PurchaseManager {
 
     private PurchaseManager() {
         // this is a temporary setup for this class
-        //
+
     }
 
     public Purchase savePurchaseData(int id, String category, float amount){

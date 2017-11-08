@@ -7,7 +7,6 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import api.PurchaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -46,29 +45,23 @@ public class MainController implements Initializable {
     protected ChoiceBox<String> categoryBox;
     @FXML
     protected TextField amount;
-
     @FXML 
-    protected TableView<Purchase> latestPerchaseTable  = new TableView<>();
-
+    protected TableView<Purchase> latestPerchaseTable;
     @FXML
-    protected TableView billsDue;
-    @FXML
-    protected TableView changesTable;
+    protected TableView billsDue, changesTable;
     @FXML
     protected PieChart purchasesPie;
     @FXML
-    protected TextField dateField;
+    protected TextField dateField, categoryField, amountField, nameField;
     @FXML
-    protected TextField amountField;
+    protected CategoryAxis xAxis;
     @FXML
-    protected TextField nameField;
+    protected NumberAxis yAxis;
     @FXML
-    protected TextField categoryField;
+    protected BarChart<String, Double> bc;
 
-    final ObservableList<Purchase> data = FXCollections.observableArrayList(new Purchase(10.99f, "Today", "Hello", "World"));
+    final ObservableList<Purchase> data = FXCollections.observableArrayList();
 
-    @FXML
-    protected TableView latestPerchaseTable;
     @FXML
     protected void inputWindow(ActionEvent e) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("inputWindow.fxml"), resources);
@@ -94,12 +87,18 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        latestPerchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         latestPerchaseTable.setItems(data);
         dateCol.setCellValueFactory(new PropertyValueFactory<Purchase, String>("Date"));
-
         nameCol.setCellValueFactory(new PropertyValueFactory<Purchase, String>("Name"));
         catCol.setCellValueFactory(new PropertyValueFactory<Purchase, String>("Category"));
         amountCol.setCellValueFactory(new PropertyValueFactory<Purchase, Float>("Amount"));
+
+        xAxis.setLabel("Category");
+        yAxis.setLabel("Percentage");
+
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        bc.getData().add(series1);
 
     }    
     
