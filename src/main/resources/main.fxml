@@ -74,19 +74,16 @@
                                       <items>
                                         <BorderPane minHeight="0.0" minWidth="100.0" prefHeight="160.0" prefWidth="100.0">
                                              <center>
-                                                <BarChart BorderPane.alignment="CENTER">
+                                                <BarChart fx:id="bc" BorderPane.alignment="CENTER">
                                                   <xAxis>
-                                                    <CategoryAxis side="BOTTOM" />
+                                                    <CategoryAxis fx:id="xAxis" side="BOTTOM" />
                                                   </xAxis>
                                                   <yAxis>
-                                                    <NumberAxis side="LEFT" />
+                                                    <NumberAxis fx:id="yAxis" side="LEFT" />
                                                   </yAxis>
                                                 </BarChart>
                                              </center>
-                                            <bottom>
-                                                <Button onAction="#addPurchaseEvent" text="Add">
-                                                </Button>
-                                            </bottom>
+
                                         </BorderPane>
                                         <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
                                             <padding>
@@ -95,7 +92,7 @@
                                            <children>
                                                <Label style="-fx-font: NORMAL 20 Tahoma;" text="Latest" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                             </Label>
-                                               <TableView fx:id="latestPerchaseTable" GridPane.columnIndex="0" GridPane.rowIndex="1" columnResizePolicy="CONSTRAINED_RESIZE_POLICY">
+                                               <TableView fx:id="latestPerchaseTable" GridPane.columnIndex="0" GridPane.rowIndex="1" >
                                                    <columns>
                                                        <TableColumn fx:id="dateCol" prefWidth="60.0" text="Date">
                                                     </TableColumn>
