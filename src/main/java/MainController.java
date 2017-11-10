@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
@@ -109,6 +110,17 @@ public class MainController implements Initializable {
 
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
         bc.getData().add(series1);
+
+        ObservableList<PieChart.Data> pieData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Unallocated", 100),
+                        new PieChart.Data("Food", 30)
+        );
+
+        purchasesPie.setData(pieData);
+        purchasesPie.setTitle("Money Spent This Month");
+        purchasesPie.setLabelLineLength(10);
+        purchasesPie.setLegendSide(Side.LEFT);
 
     }    
     
