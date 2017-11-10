@@ -1,7 +1,7 @@
 package usecases;
 
-import core.Dto.PurchaseCreationRequest;
-import core.Dto.PurchaseResponseMessage;
+import core.Dto.Purchase.PurchaseCreationRequest;
+import core.Dto.Purchase.PurchaseResponseMessage;
 import core.entities.BudgetMonth;
 import core.usecases.CreatePurchaseInteractor;
 import dummyrepos.DummyBudgetRepo;
