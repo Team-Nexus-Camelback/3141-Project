@@ -64,5 +64,15 @@ public class Payment {
     public void payPayment(){
         isPaid = true;
     }
+
+    @Override
+    public String toString() {
+        return
+                "paymentName " + paymentName +
+                " amount " + amount +
+                " dueDate " + DateFormat.getInstance().format(dueDate) +
+                " id " + id +
+                " isPaid " + isPaid;
+    }
 }
 

@@ -1,6 +1,7 @@
 package core.entities;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * Created by ryan on 10/17/17.
@@ -22,7 +23,9 @@ public class BudgetMonth {
         purchasesList.add(purchase.getId(), purchase);
     }
 
-    public void addPayment(Payment payment){}
+    public void addPayment(Payment payment){
+        paymentList.add(payment.getId(), payment);
+    }
 
     public void addNewCategoryBudgetIfNew(String category, double budget) {
         if (categories.keySet().contains(category)){
@@ -75,5 +78,16 @@ public class BudgetMonth {
             }
         });
         return purchasesList.subList(0, numberOfPurchase - 1);
+    }
+
+    public List<Payment> getUnfinishedPayments(){
+        List<Payment> returnList  = paymentList;
+        returnList.removeIf(new Predicate<Payment>() {
+            @Override
+            public boolean test(Payment payment) {
+                return payment.isPaid();
+            }
+        });
+        return returnList;
     }
 }

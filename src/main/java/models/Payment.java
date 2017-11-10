@@ -20,7 +20,7 @@ public class Payment {
     public Payment(String name, double amount, String dueDate) throws ParseException {
         this.name = new SimpleStringProperty(name);
         this.amount = new SimpleDoubleProperty(amount);
-        Date date = DateFormat.getInstance().parse(dueDate);
+        Date date = DateFormat.getDateInstance(DateFormat.SHORT).parse(dueDate);
         this.dueDate = new SimpleObjectProperty<>(date);
     }
 
