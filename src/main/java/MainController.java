@@ -4,13 +4,16 @@
  * and open the template in the editor.
  */
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import api.PurchaseManager;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,9 +23,11 @@ import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Purchase;
 import models.Month;
+import javafx.scene.*;
 
 /**
  * FXML Controller class
@@ -117,11 +122,21 @@ public class MainController implements Initializable {
                         new PieChart.Data("Food", 30)
         );
 
+        pieData.forEach(data ->
+        data.nameProperty().bind(
+                Bindings.concat(
+                        data.getName(), " ", (data.pieValueProperty().multiply(100)), "%"
+                )
+        ));
         purchasesPie.setData(pieData);
         purchasesPie.setTitle("Money Spent This Month");
         purchasesPie.setLabelLineLength(10);
         purchasesPie.setLegendSide(Side.LEFT);
 
+
+
+        }
+
     }    
     
-}
+
