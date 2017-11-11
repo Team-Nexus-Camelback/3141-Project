@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -75,7 +76,21 @@ public class MonthManager {
         Double bugetAmount = Double.parseDouble(response.get(MonthKeys.MONTHLY_BUDGET.getName()));
         List<Payment> payments = paymentsFromResponse(response.get(MonthKeys.PAYMENTS.getName()));
         HashMap<String, Double> categoryGraph = getCategoryGraphFromResponse(response.get(MonthKeys.CATEGORY_SPENT.getName()));
-        return new Month(monthDate, bugetAmount, categoryGraph, purchases, payments);
+        HashMap<String, Double> overviewGraph = getOverviewGraphFromResponse(response.get(MonthKeys.OVERVIEW.getName()));
+        return new Month(monthDate, bugetAmount, categoryGraph, purchases, payments, overviewGraph);
+    }
+
+    //TODO move these method to a new class
+
+    private HashMap<String,Double> getOverviewGraphFromResponse(String s) {
+        s = s.substring(1, s.length() -1); // removes { }
+        String[] values = s.split(",");
+        HashMap<String, Double> returnMap = new HashMap<>();
+        for (String pair : values){
+            String[] entry = pair.split("=");
+            returnMap.put(entry[0].trim(), Double.parseDouble(entry[1].trim()));
+        }
+        return returnMap;
     }
 
     private HashMap<String,Double> getCategoryGraphFromResponse(String s) {
