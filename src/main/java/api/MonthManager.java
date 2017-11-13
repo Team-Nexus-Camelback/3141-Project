@@ -71,120 +71,12 @@ public class MonthManager {
     }
 
     private Month translateResponseToModel(HashMap<String, String> response){
-        List<models.Purchase> purchases = purchaseFromResponse(response.get(MonthKeys.PURCHASES.getName()));
+        List<models.Purchase> purchases = ResponseTranslator.purchaseFromResponse(response.get(MonthKeys.PURCHASES.getName()));
         String monthDate = response.get(MonthKeys.DATE.getName());
         Double bugetAmount = Double.parseDouble(response.get(MonthKeys.MONTHLY_BUDGET.getName()));
-        List<Payment> payments = paymentsFromResponse(response.get(MonthKeys.PAYMENTS.getName()));
-        HashMap<String, Double> categoryGraph = getCategoryGraphFromResponse(response.get(MonthKeys.CATEGORY_SPENT.getName()));
-        HashMap<String, Double> overviewGraph = getOverviewGraphFromResponse(response.get(MonthKeys.OVERVIEW.getName()));
+        List<Payment> payments = ResponseTranslator.paymentsFromResponse(response.get(MonthKeys.PAYMENTS.getName()));
+        HashMap<String, Double> categoryGraph = ResponseTranslator.getCategoryGraphFromResponse(response.get(MonthKeys.CATEGORY_SPENT.getName()));
+        HashMap<String, Double> overviewGraph = ResponseTranslator.getOverviewGraphFromResponse(response.get(MonthKeys.OVERVIEW.getName()));
         return new Month(monthDate, bugetAmount, categoryGraph, purchases, payments, overviewGraph);
-    }
-
-    //TODO move these method to a new class
-
-    private HashMap<String,Double> getOverviewGraphFromResponse(String s) {
-        s = s.substring(1, s.length() -1); // removes { }
-        String[] values = s.split(",");
-        HashMap<String, Double> returnMap = new HashMap<>();
-        for (String pair : values){
-            String[] entry = pair.split("=");
-            returnMap.put(entry[0].trim(), Double.parseDouble(entry[1].trim()));
-        }
-        return returnMap;
-    }
-
-    private HashMap<String,Double> getCategoryGraphFromResponse(String s) {
-        s = s.replace("[", "");
-        s = s.replace("]", "");
-        String categories[] = s.split(",");
-        HashMap<String, Double> returnMap = new HashMap<>();
-        String keyname = "";
-        for (String cat : categories){
-            try{
-                double percent = Double.parseDouble(cat);
-                returnMap.put(keyname, percent);
-            }catch (Exception e){
-                keyname = cat;
-            }
-        }
-        return returnMap;
-    }
-
-    private List<models.Purchase> purchaseFromResponse(String purchasesData) {
-        purchasesData = purchasesData.replace("[", "");
-        purchasesData = purchasesData.replace("]", "");
-        ArrayList<models.Purchase> purchaseArrayList = new ArrayList<>();
-        models.Purchase newPurchase = createPurchaseFromString(purchasesData);
-        purchaseArrayList.add(newPurchase);
-        return purchaseArrayList;
-    }
-
-    private models.Purchase createPurchaseFromString(String purchase) {
-        String[] dataValues = purchase.split(" ");
-        String name = "";
-        float amount = 0.0f;
-        String date = "";
-        String category = "";
-
-        for (int i = 0; i < dataValues.length; i++) {
-            switch (dataValues[i]) {
-                case "name":
-                    name = dataValues[i + 1];
-                    break;
-                case "amount":
-                    amount = Float.parseFloat(dataValues[i + 1]);
-                    break;
-                case "date":
-                    date = dataValues[i + 1];
-                    break;
-                case "category":
-                    category = dataValues[i + 1];
-                    break;
-                default:
-            }
-        }
-        return new models.Purchase(amount, date, category, name);
-    }
-
-    private List<Payment> paymentsFromResponse(String paymentData){
-        paymentData = paymentData.replace("[", "");
-        paymentData = paymentData.replace("]", "");
-        String[] payments = paymentData.split(",");
-        ArrayList<Payment> paymentArrayList = new ArrayList<>();
-        for (String payment : payments){
-            Payment newPayment = createPaymentFromString(payment);
-            paymentArrayList.add(newPayment);
-        }
-        return paymentArrayList;
-    }
-
-    private Payment createPaymentFromString(String payments){
-        String[] dataValues = payments.split(" ");
-        String name = "";
-        double amount = 0.0;
-        String date = "";
-        boolean isPaid = false;
-        for (int i = 0; i < dataValues.length; i++){
-            switch (dataValues[i]){
-                case "paymentName":
-                    name = dataValues[i+1];
-                    break;
-                case "amount":
-                    amount = Double.parseDouble(dataValues[i+1]);
-                    break;
-                case "dueDate":
-                    date = dataValues[i+1];
-                    break;
-                case "isPaid":
-                    isPaid = Boolean.parseBoolean(dataValues[i+1]);
-                    break;
-            }
-        }
-        try {
-            return new Payment(name, amount, date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
