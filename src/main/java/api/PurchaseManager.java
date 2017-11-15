@@ -19,23 +19,7 @@ import java.util.List;
  */
 public class PurchaseManager {
     private static PurchaseManager ourInstance = new PurchaseManager();
-
-    private CreatePurchaseInteractor purchaseInteractor = new CreatePurchaseInteractor(new BudgetMonthRepository() {
-        @Override
-        public BudgetMonth getMonthFromDate(String date) {
-            return new BudgetMonth("2/11/2017", 5000);
-        }
-
-        @Override
-        public boolean saveBudgetMonth(BudgetMonth month) {
-            return false;
-        }
-
-        @Override
-        public List<BudgetMonth> monthsFromYear(String year) {
-            return null;
-        }
-    });
+    private CreatePurchaseInteractor purchaseInteractor;
 
 
     public static PurchaseManager getInstance() {
@@ -52,5 +36,9 @@ public class PurchaseManager {
         Hashtable<String, String> data = purchaseInteractor.handleRequest(createRequest).getMessage();
         return new Purchase(Float.parseFloat(data.get("amount")),"11/3/2017",
                 data.get("category"), "Name");
+    }
+
+    public void setRepo(BudgetMonthRepository repo){
+        purchaseInteractor = new CreatePurchaseInteractor(repo);
     }
 }

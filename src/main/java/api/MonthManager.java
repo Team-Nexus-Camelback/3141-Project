@@ -2,50 +2,23 @@ package api;
 
 import core.Dto.Month.MonthKeys;
 import core.Dto.Month.MonthRequestMessage;
-import core.entities.BudgetMonth;
-import core.entities.Purchase;
+
 import core.gateways.BudgetMonthRepository;
 import core.usecases.GetBudgetMonth;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import models.Month;
 import models.Payment;
 
-import java.text.ParseException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 /**
  * Created by ryan on 10/27/17.
  */
 public class MonthManager {
     private static MonthManager ourInstance = new MonthManager();
-    private GetBudgetMonth getBudgetMonth = new GetBudgetMonth(new BudgetMonthRepository() {
-        @Override
-        public BudgetMonth getMonthFromDate(String date) {
-            BudgetMonth test = new BudgetMonth("10-2017", 1000);
-            test.addPurchase(new Purchase(0, 100, "Happy"));
-            try {
-                test.addPayment(new core.entities.Payment(0, "Taxes", 300, "11/4/17"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return test;
-        }
-
-        @Override
-        public boolean saveBudgetMonth(BudgetMonth month) {
-            return false;
-        }
-
-        @Override
-        public List<BudgetMonth> monthsFromYear(String year) {
-            return null;
-        }
-    });
+    private GetBudgetMonth getBudgetMonth;
     private HashMap<String, String> lastRequestData;
 
     public static MonthManager getInstance() {
@@ -78,5 +51,9 @@ public class MonthManager {
         HashMap<String, Double> categoryGraph = ResponseTranslator.getCategoryGraphFromResponse(response.get(MonthKeys.CATEGORY_SPENT.getName()));
         HashMap<String, Double> overviewGraph = ResponseTranslator.getOverviewGraphFromResponse(response.get(MonthKeys.OVERVIEW.getName()));
         return new Month(monthDate, bugetAmount, categoryGraph, purchases, payments, overviewGraph);
+    }
+
+    public void setRepo(BudgetMonthRepository repo){
+        getBudgetMonth = new GetBudgetMonth(repo);
     }
 }
