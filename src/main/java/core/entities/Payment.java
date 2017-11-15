@@ -1,50 +1,78 @@
 package core.entities;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
- * Created by ryan on 10/13/17.
- * The class representation of a 'bill', or 'payment' withing the system
- */
+     * Created by Ryan Philipps on 10/13/17.
+     * Date Last Modified: 10/16/17 by Cody Koski
+     * The class representation of a 'bill', or 'payment' within the system
+     */
 public class Payment {
-    // TODO Cody you can start designing this class of other entities
-	
-	//EXAMPLE PAYMENT METHODS AND PROPERTIES
-	
-	private int id = 0;
-	private double Value = 0;
-	private boolean Status = false;
-	private String category = null;
-	private String Due = null;
-	
-	public Payment(int id, double Value, boolean Status, String category, String Due) {
-		this.id = id;
-		this.Value = Value;
-		this.Status = Status;
-		this.category = category;
-		this.Due = Due;
-	}
-	
-	//returns the id of the payment
-	public int getID() {
-		return this.id;
-	}
-	
-	//returns the value of payment
-	public double getValue() {
-		return this.Value;
-	}
-	
-	//return whether the payment was made or not
-	public boolean getStatus() {
-		return this.Status;
-	}
-	
-	//returns the category of the payment example: Food, Gas
-	public String getCategory() {
-		return this.category;
-	}
-	
-	//returns the due date for the payment stored as an int value mm/dd/yyyy ex: 03201995 
-	public String getDueDate() {
-		return this.Due;
-	}
+    private String paymentName;
+    private double amount;
+    private Date dueDate;
+    private int id;
+    private boolean  isPaid;
+
+    /**
+     *
+     * @param paymentName
+     * @param amount
+     * @param dueDate should be in the format of M/d/yy;
+     */
+    public Payment(int id, String paymentName, double amount, String dueDate) throws ParseException {
+        this.id = id;
+        this.paymentName = paymentName;
+        this.amount = amount;
+        this.dueDate = getDateFromString(dueDate);
+    }
+
+    private Date getDateFromString(String dueDateString) throws ParseException {
+        return DateFormat.getDateInstance(DateFormat.SHORT).parse(dueDateString);
+    }
+
+    public int daysTillDueDate(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        Date today = calendar.getTime();
+        return today.compareTo(dueDate);
+    }
+
+    public String getPaymentName() {
+        return paymentName;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getDueDate() {
+        return dueDate.toString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void payPayment(){
+        isPaid = true;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "paymentName " + paymentName +
+                " amount " + amount +
+                " dueDate " + DateFormat.getInstance().format(dueDate) +
+                " id " + id +
+                " isPaid " + isPaid;
+    }
 }
+
