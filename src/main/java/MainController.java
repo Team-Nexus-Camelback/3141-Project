@@ -87,7 +87,7 @@ public class MainController implements Initializable {
         {
             Alert saved = new Alert(Alert.AlertType.INFORMATION);
             saved.setHeaderText(null);
-            saved.setContentText("Date Formatted Wrong. Format: M/DD/YY");
+            saved.setContentText("Date Formatted Wrong. Format: M/DD/YY\n Or Invalid Amount");
             saved.showAndWait();
         }
     }
@@ -105,14 +105,17 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        //TODO tabPane.getSelectionModel().select(tabname); This forces the current tab to switch
+        //TODO get table and chart data from the other class
 
+        //sets up the table to be editable and makes it so the columns resize on their own
         latestPerchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         latestPerchaseTable.setEditable(true);
         latestPerchaseTable.setItems(data);
 
-        //ADD UPDATE METHOD TO ALL OF THESE SO IT UPDATES THE DATA SAVED AND GRAPHS
+        //TODO ADD UPDATE METHOD TO ALL OF THESE SO IT UPDATES THE DATA SAVED AND GRAPHS USES ID
         //Date Column declaration and handler
-        dateCol.setCellValueFactory(new PropertyValueFactory<Purchase, String>("Date"));
+        dateCol.setCellValueFactory(new PropertyValueFactory("Date"));
         dateCol.setCellFactory(TextFieldTableCell.forTableColumn());
         dateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Purchase, String>>() {
@@ -168,18 +171,27 @@ public class MainController implements Initializable {
         //Amount Column declaration and handler to check if its a double when someone edits
         amountCol.setCellValueFactory(new PropertyValueFactory<Purchase, Float>("Amount"));
         amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        try {
         amountCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Purchase, Float>>() {
                     @Override
                     public void handle(TableColumn.CellEditEvent<Purchase, Float> event) {
-                        final Float value = event.getNewValue() != null ?
-                                event.getNewValue() : event.getOldValue();
-                        ((Purchase) event.getTableView().getItems().get(
-                                event.getTablePosition().getRow())
-                        ).setAmount(value);
+
+                            final Float value = event.getNewValue() != null ?
+                                    event.getNewValue() : event.getOldValue();
+                            ((Purchase) event.getTableView().getItems().get(
+                                    event.getTablePosition().getRow())
+                            ).setAmount(value);
                     }
                 }
+
         );
+        } catch (Exception e){
+            Alert saved = new Alert(Alert.AlertType.INFORMATION);
+            saved.setHeaderText(null);
+            saved.setContentText("Invalid Amount");
+            saved.showAndWait();
+        }
 
         xAxis.setLabel("Category");
         yAxis.setLabel("Percentage");
