@@ -92,6 +92,7 @@ public class ResponseTranslator {
         double amount = 0.0;
         String date = "";
         boolean isPaid = false;
+        int id = -1;
         for (int i = 0; i < dataValues.length; i++){
             switch (dataValues[i]){
                 case "paymentName":
@@ -106,10 +107,14 @@ public class ResponseTranslator {
                 case "isPaid":
                     isPaid = Boolean.parseBoolean(dataValues[i+1]);
                     break;
+                case "id":
+                    id = Integer.parseInt(dataValues[i+1]);
+                    break;
+
             }
         }
         try {
-            return new Payment(name, amount, date);
+            return new Payment(id, name, amount, date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
