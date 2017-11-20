@@ -9,13 +9,30 @@ import java.util.List;
  * The Contract that the data storage needs to follow
  */
 public interface PaymentRepository {
-    // payment will be a class created later, that you should depend on
+	
+    /**
+     * Get payments that are not paid
+     * 
+     * @return a list of payments that are unpaid
+     */
     List<Payment> getUnFinishedPayments();
 
-    // payments should not be tied of a budget month
+    /**
+     * Get a payment by looking it up with its unique id
+     * Each payment holds a value,category,due date,and paid boolean
+     * 
+     * @param id
+     * @return Payment
+     */
     Payment paymentByID(int id);
 
-    // How you save the payment is up to you
-    boolean savePayment(Payment payment);
+    /**
+     * Store a payment with a unique id
+     * 
+     * @param payment
+     * @param id
+     * @return true if the payment was saved otherwise false
+     */
+    boolean savePayment(Payment payment, int id);
 
 }
