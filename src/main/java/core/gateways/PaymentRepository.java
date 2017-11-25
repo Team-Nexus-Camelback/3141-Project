@@ -2,6 +2,7 @@ package core.gateways;
 
 import core.entities.Payment;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -14,8 +15,10 @@ public interface PaymentRepository {
      * Get payments that are not paid
      * 
      * @return a list of payments that are unpaid
+     * @throws ParseException 
+     * @throws NumberFormatException 
      */
-    List<Payment> getUnFinishedPayments();
+    List<Payment> getUnFinishedPayments() throws NumberFormatException, ParseException;
 
     /**
      * Get a payment by looking it up with its unique id
@@ -23,8 +26,9 @@ public interface PaymentRepository {
      * 
      * @param id
      * @return Payment
+     * @throws ParseException 
      */
-    Payment paymentByID(int id);
+    Payment paymentByID(int id) throws ParseException;
 
     /**
      * Store a payment with a unique id
