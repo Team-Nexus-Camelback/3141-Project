@@ -3,9 +3,11 @@ package api;
 import core.Dto.Month.MonthKeys;
 import core.Dto.Month.MonthRequestMessage;
 
+import core.Dto.Month.MonthUpdateRequest;
 import core.gateways.BudgetMonthRepository;
 import core.usecases.GetBudgetMonth;
 
+import core.usecases.UpdateBudgetMonth;
 import models.Month;
 import models.Payment;
 
@@ -19,7 +21,8 @@ import java.util.List;
 public class MonthManager {
     private static MonthManager ourInstance = new MonthManager();
     private GetBudgetMonth getBudgetMonth;
-    private HashMap<String, String> lastRequestData;
+    private UpdateBudgetMonth updateBudgetMonth;
+    private HashMap<String, String> lastRequestData = new HashMap<>();
 
     public static MonthManager getInstance() {
         return ourInstance;
@@ -35,8 +38,14 @@ public class MonthManager {
 
     public Month getMonthData(String monthDate){
         MonthRequestMessage request = new MonthRequestMessage(true, monthDate);
-        lastRequestData = getBudgetMonth.handleRequest(request).getMessage();
+        if (!monthDate.equals(lastRequestData.get(MonthKeys.DATE.getName())))
+            lastRequestData = getBudgetMonth.handleRequest(request).getMessage();
         return translateResponseToModel(lastRequestData);
+    }
+
+    public boolean  updateMonth(Month updateMonth){
+        MonthUpdateRequest request = new MonthUpdateRequest(updateMonth.getMonthDate(), updateMonth.getSpendingAmount(), updateMonth.getOverview());
+        return updateBudgetMonth.handleRequest(request) == null;
     }
 
     public void compareMonthsData(String ... monthsToCompare){
@@ -55,5 +64,6 @@ public class MonthManager {
 
     public void setRepo(BudgetMonthRepository repo){
         getBudgetMonth = new GetBudgetMonth(repo);
+        updateBudgetMonth = new UpdateBudgetMonth(repo);
     }
 }

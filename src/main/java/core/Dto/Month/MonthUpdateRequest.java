@@ -3,16 +3,17 @@ package core.Dto.Month;
 import core.gateways.IRequest;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ryan on 11/18/17.
  */
 public class MonthUpdateRequest implements IRequest {
     private double spendingAmount;
-    private HashMap<String, Double> categoryPercents;
+    private Map<String, Double> categoryPercents;
     private String monthDate;
 
-    public MonthUpdateRequest(String monthDate, double spendingAmount, HashMap<String, Double> categoryPercents) {
+    public MonthUpdateRequest(String monthDate, double spendingAmount, Map<String, Double> categoryPercents) {
         this.spendingAmount = spendingAmount;
         this.categoryPercents = categoryPercents;
         this.monthDate = monthDate;
@@ -22,7 +23,7 @@ public class MonthUpdateRequest implements IRequest {
         return spendingAmount;
     }
 
-    public HashMap<String, Double> getCategoryPercents() {
+    public Map<String, Double> getCategoryPercents() {
         return categoryPercents;
     }
 
