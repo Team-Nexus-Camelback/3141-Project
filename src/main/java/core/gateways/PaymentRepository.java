@@ -35,4 +35,6 @@ public interface PaymentRepository {
      */
     boolean savePayment(Payment payment, int id);
 
+    boolean deletePaymentByID(int id);
+
 }
