@@ -15,7 +15,7 @@ import java.util.List;
  * Created by ryan on 10/16/17.
  * Handles fetching payments from the repo and sending then in a response message
  */
-public class PaymentInfoInterator  implements IRequestHandler<PaymentRequestMessage, PaymentResponseMessage>{
+public class PaymentInfoInterator extends AbstractHandler<PaymentRequestMessage, PaymentResponseMessage>{
 
     private PaymentRepository paymentRepository;
 
@@ -45,7 +45,8 @@ public class PaymentInfoInterator  implements IRequestHandler<PaymentRequestMess
         return new PaymentResponseMessage(listOfPaymentInfo);
     }
 
-    private PaymentResponseMessage errorResponse(String error) {
+    @Override
+    protected PaymentResponseMessage errorResponse(String error) {
         HashMap<String,String> errorMessage = new HashMap<>();
         errorMessage.put(PaymentKeys.ERROR.getKeyName(), error);
         ArrayList<HashMap<String, String>> responseMessage = new ArrayList<>();

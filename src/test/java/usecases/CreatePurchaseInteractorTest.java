@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class CreatePurchaseInteractorTest {
     private CreatePurchaseInteractor newInteractorForTesting(){
-        BudgetMonth month = new BudgetMonth("10-2017");
+        BudgetMonth month = new BudgetMonth("10-2017", 1000);
         return new CreatePurchaseInteractor(new DummyBudgetRepo(month));
     }
 
