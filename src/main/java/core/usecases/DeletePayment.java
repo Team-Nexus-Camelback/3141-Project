@@ -16,6 +16,10 @@ public class DeletePayment extends AbstractHandler<PaymentDeletionRequest, Payme
 
     private PaymentRepository repository;
 
+    public DeletePayment(PaymentRepository repo) {
+        repository = repo;
+    }
+
     @Override
     public PaymentResponseMessage handleRequest(PaymentDeletionRequest request) {
         Payment paymentToDelete = repository.paymentByID(request.getId());
