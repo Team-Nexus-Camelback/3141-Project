@@ -16,12 +16,11 @@ import java.util.List;
 /**
  * Created by ryan on 11/18/17.
  */
-public class UpdatePayment extends AbstractHandler<PaymentUpdateRequest, PaymentResponseMessage> {
-    private PaymentRepository repository;
-
+public class UpdatePayment extends PaymentInteractor<PaymentUpdateRequest> {
     public UpdatePayment(PaymentRepository repository) {
-        this.repository = repository;
+        super(repository);
     }
+
 
     @Override
     public PaymentResponseMessage handleRequest(PaymentUpdateRequest request) {
@@ -46,11 +45,5 @@ public class UpdatePayment extends AbstractHandler<PaymentUpdateRequest, Payment
         return new PaymentResponseMessage(response);
     }
 
-    private HashMap<String,String> createResponseData(Payment payment) {
-        HashMap<String, String> responseData = new HashMap<>();
-        responseData.put(PaymentKeys.NAME.getKeyName(), payment.getPaymentName());
-        responseData.put(PaymentKeys.AMOUNT.getKeyName(), String.valueOf(payment.getAmount()));
-        responseData.put(PaymentKeys.DUE_DATE.getKeyName(), payment.getDueDate());
-        return responseData;
-    }
+
 }

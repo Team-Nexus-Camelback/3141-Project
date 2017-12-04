@@ -15,19 +15,16 @@ import java.util.List;
  * Created by ryan on 10/16/17.
  * Handles fetching payments from the repo and sending then in a response message
  */
-public class PaymentInfoInterator extends AbstractHandler<PaymentRequestMessage, PaymentResponseMessage>{
-
-    private PaymentRepository paymentRepository;
+public class PaymentInfoInterator extends PaymentInteractor<PaymentRequestMessage>{
 
     public PaymentInfoInterator(PaymentRepository paymentRepository) {
-        this.paymentRepository = paymentRepository;
+        super(paymentRepository);
     }
-
 
     @Override
     public PaymentResponseMessage handleRequest(PaymentRequestMessage request) {
         if (request.needsAllPayments())
-            return responseForAllPayments(paymentRepository.getUnFinishedPayments());
+            return responseForAllPayments(repository.getUnFinishedPayments());
 
         return responseForCertainPayments(request.getPayments());
 
@@ -39,19 +36,10 @@ public class PaymentInfoInterator extends AbstractHandler<PaymentRequestMessage,
 
         ArrayList<HashMap<String, String>> listOfPaymentInfo = new ArrayList<>();
         for(int id : payments){
-            Payment payment = paymentRepository.paymentByID(id);
+            Payment payment = repository.paymentByID(id);
             listOfPaymentInfo.add(createResponseData(payment));
         }
         return new PaymentResponseMessage(listOfPaymentInfo);
-    }
-
-    @Override
-    protected PaymentResponseMessage errorResponse(String error) {
-        HashMap<String,String> errorMessage = new HashMap<>();
-        errorMessage.put(PaymentKeys.ERROR.getKeyName(), error);
-        ArrayList<HashMap<String, String>> responseMessage = new ArrayList<>();
-        responseMessage.add(errorMessage);
-        return new PaymentResponseMessage(responseMessage, false);
     }
 
     private PaymentResponseMessage responseForAllPayments(List<Payment> unFinishedPayments) {
@@ -66,11 +54,4 @@ public class PaymentInfoInterator extends AbstractHandler<PaymentRequestMessage,
          return new PaymentResponseMessage(paymentInfoList);
     }
 
-    private HashMap<String,String> createResponseData(Payment payment) {
-        HashMap<String, String> responseData = new HashMap<>();
-        responseData.put(PaymentKeys.NAME.getKeyName(), payment.getPaymentName());
-        responseData.put(PaymentKeys.AMOUNT.getKeyName(), String.valueOf(payment.getAmount()));
-        responseData.put(PaymentKeys.DUE_DATE.getKeyName(), payment.getDueDate());
-        return responseData;
-    }
 }

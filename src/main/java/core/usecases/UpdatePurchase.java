@@ -17,6 +17,10 @@ public class UpdatePurchase extends AbstractHandler<PurchaseUpdateRequest, Purch
     private BudgetMonthRepository repository;
     private PurchaseFactory purchaseFactory = new PurchaseFactory();
 
+    public UpdatePurchase(BudgetMonthRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public PurchaseResponseMessage handleRequest(PurchaseUpdateRequest request) {
         BudgetMonth workingMonth = repository.getMonthFromDate(request.getDate());
