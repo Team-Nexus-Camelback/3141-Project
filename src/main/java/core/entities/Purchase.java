@@ -8,13 +8,13 @@ import java.util.Date;
  * Created by ryan on 10/17/17.
  */
 public class Purchase {
-    private float amount;
+    private double amount;
     private Date purchaseDate;
     private String purchaseName;
     private String category;
     private int id;
 
-    public Purchase(int id, float amount, String category) {
+    public Purchase(int id, double amount, String category) {
         this.id = id;
         this.amount = amount;
         this.category = category;
@@ -23,7 +23,7 @@ public class Purchase {
         this.purchaseDate = calendar.getTime();
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 

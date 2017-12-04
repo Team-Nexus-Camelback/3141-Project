@@ -57,7 +57,7 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
     private PurchaseResponseMessage createResponseFromRequest(PurchaseCreationRequest request){
         Hashtable<String, String> responseData = new Hashtable<>();
         responseData.put(PurchaseKeys.ID.key(), String.valueOf(request.getId()));
-        responseData.put(PurchaseKeys.AMOUNT.key(), request.getAmount());
+        responseData.put(PurchaseKeys.AMOUNT.key(), request.getAmount().toString());
         responseData.put(PurchaseKeys.CATEGORY.key(), request.getCategory());
         return new PurchaseResponseMessage(responseData);
     }

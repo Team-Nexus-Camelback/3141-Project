@@ -54,6 +54,7 @@ public class ResponseTranslator {
         float amount = 0.0f;
         String date = "";
         String category = "";
+        int id = -1;
 
         for (int i = 0; i < dataValues.length; i++) {
             switch (dataValues[i]) {
@@ -69,10 +70,13 @@ public class ResponseTranslator {
                 case "category":
                     category = dataValues[i + 1];
                     break;
+                case "id":
+                    id = Integer.parseInt(dataValues[i+1]);
+                    break;
                 default:
             }
         }
-        return new models.Purchase(amount, date, category, name);
+        return new models.Purchase(id, amount, date, category, name);
     }
 
     public static List<Payment> paymentsFromResponse(String paymentData){
