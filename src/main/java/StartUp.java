@@ -51,6 +51,11 @@ public class StartUp {
             public boolean savePayment(Payment payment, int id) {
                 return false;
             }
+
+            @Override
+            public boolean deletePaymentByID(int id) {
+                return false;
+            }
         });
         MonthManager.getInstance().setRepo(new BudgetMonthRepository() {
             @Override

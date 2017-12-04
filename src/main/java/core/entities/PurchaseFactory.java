@@ -9,7 +9,7 @@ import core.Dto.Purchase.PurchaseRequest;
 public class PurchaseFactory {
 
     public Purchase makeNewPurchaseFromRequest(PurchaseRequest request){
-        float purchaseAmount = Float.parseFloat(request.getAmount());
+        Double purchaseAmount = request.getAmount();
         String purchaseCategory = request.getCategory();
         int purchaseID = request.getId();
         return new Purchase(purchaseID, purchaseAmount, purchaseCategory);

@@ -37,6 +37,11 @@ public class UpdatePaymentTest {
                     testPayment = payment;
                     return true;
                 }
+
+                @Override
+                public boolean deletePaymentByID(int id) {
+                    return false;
+                }
             });
         } catch (Exception e) {
             System.out.print("You screwed up");

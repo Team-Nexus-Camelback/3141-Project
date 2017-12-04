@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class DummyBudgetRepo implements BudgetMonthRepository {
 
-    private BudgetMonth month = new BudgetMonth("10-2017");
+    private BudgetMonth month = new BudgetMonth("10-2017", 1337);
 
     public DummyBudgetRepo(BudgetMonth month) {
         this.month = month;
@@ -28,6 +28,11 @@ public class DummyBudgetRepo implements BudgetMonthRepository {
     public boolean saveBudgetMonth(BudgetMonth month) {
         this.month = month;
         return true;
+    }
+
+    @Override
+    public boolean deletePurchase(int id) {
+        return false;
     }
 
     @Override

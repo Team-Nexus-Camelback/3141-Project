@@ -30,7 +30,7 @@ public class Purchase {
         return Amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(double amount) {
         this.Amount.set(amount);
     }
 

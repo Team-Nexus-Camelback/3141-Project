@@ -46,9 +46,16 @@ class PaymentInfoInteratorTest {
             }
 
             @Override
-            public boolean savePayment(Payment payment) {
+            public boolean savePayment(Payment payment, int id) {
                 return false;
             }
+
+            @Override
+            public boolean deletePaymentByID(int id) {
+                return false;
+            }
+
+
         });
     }
 
