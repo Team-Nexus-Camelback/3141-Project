@@ -1,6 +1,7 @@
 package core.usecases;
 
 import core.Dto.Purchase.PurchaseCreationRequest;
+import core.Dto.Purchase.PurchaseKeys;
 import core.Dto.Purchase.PurchaseResponseMessage;
 import core.entities.BudgetMonth;
 import core.entities.Purchase;
@@ -55,9 +56,9 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
 
     private PurchaseResponseMessage createResponseFromRequest(PurchaseCreationRequest request){
         Hashtable<String, String> responseData = new Hashtable<>();
-        responseData.put("id", String.valueOf(request.getId()));
-        responseData.put("amount", request.getAmount());
-        responseData.put("category", request.getCategory());
+        responseData.put(PurchaseKeys.ID.key(), String.valueOf(request.getId()));
+        responseData.put(PurchaseKeys.AMOUNT.key(), request.getAmount());
+        responseData.put(PurchaseKeys.CATEGORY.key(), request.getCategory());
         return new PurchaseResponseMessage(responseData);
     }
 

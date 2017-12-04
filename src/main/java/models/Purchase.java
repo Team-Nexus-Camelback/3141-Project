@@ -1,5 +1,6 @@
 package models;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -7,23 +8,25 @@ import javafx.beans.property.SimpleStringProperty;
  * Created by Ryan on 11/2/2017.
  */
 public class Purchase {
-    SimpleFloatProperty Amount;
+    SimpleDoubleProperty Amount;
     SimpleStringProperty Date;
     SimpleStringProperty Category;
     SimpleStringProperty Name;
+    private int id;
 
-    public Purchase(float amount, String date, String category, String name){
-        Amount = new SimpleFloatProperty(amount);
+    public Purchase(int id, double amount, String date, String category, String name){
+        Amount = new SimpleDoubleProperty(amount);
         Date = new SimpleStringProperty(date);
         Category = new SimpleStringProperty(category);
         Name = new SimpleStringProperty(name);
+        this.id = id;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return Amount.get();
     }
 
-    public SimpleFloatProperty amountProperty() {
+    public SimpleDoubleProperty amountProperty() {
         return Amount;
     }
 
@@ -65,5 +68,9 @@ public class Purchase {
 
     public void setName(String name) {
         this.Name.set(name);
+    }
+
+    public int getId() {
+        return id;
     }
 }

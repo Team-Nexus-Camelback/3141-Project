@@ -7,7 +7,8 @@ public enum PaymentKeys {
     ERROR("error"),
     DUE_DATE("date"),
     AMOUNT("amount"),
-    NAME("name");
+    NAME("name"),
+    ID("id");
 
     private String keyName;
 
