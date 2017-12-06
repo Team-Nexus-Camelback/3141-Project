@@ -1,12 +1,14 @@
 package api;
 
+import core.Dto.Payment.PaymentKeys;
 import models.Payment;
 import models.Purchase;
+import core.Dto.Payment.PaymentKeys;
 
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by ryan on 11/13/17.
@@ -81,7 +83,7 @@ public class ResponseTranslator {
 
     public static List<Payment> paymentsFromResponse(String paymentData){
         paymentData = removeBoundry(paymentData);
-        String[] payments = paymentData.split(",");
+        String[] payments = paymentData.split("},");
         ArrayList<Payment> paymentArrayList = new ArrayList<>();
         for (String payment : payments){
             Payment newPayment = createPaymentFromString(payment);
@@ -91,38 +93,31 @@ public class ResponseTranslator {
     }
 
     public static Payment createPaymentFromString(String payments){
-        String[] dataValues = payments.split(" ");
-        String name = "";
-        double amount = 0.0;
-        String date = "";
-        boolean isPaid = false;
-        int id = -1;
-        for (int i = 0; i < dataValues.length; i++){
+        payments = payments.substring(1, payments.length() -1);
+        payments = payments.replace("=", ",");
+        String[] dataValues = payments.split(",");
+        Date paymentDate = null;
+        String paymentName = "";
+        Double paymentAmount = -1000.;
+        for (int i = 0; i < dataValues.length;i++){
             switch (dataValues[i]){
-                case "paymentName":
-                    name = dataValues[i+1];
+                case "date":
+                    String dateString = dataValues[i+1];
+                    try {
+                        paymentDate = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH).parse(dateString);
+                    } catch (ParseException e) {
+                        return  null;
+                    }
                     break;
-                case "amount":
-                    amount = Double.parseDouble(dataValues[i+1]);
+                case " amount":
+                    paymentAmount = Double.parseDouble(dataValues[i+1]);
                     break;
-                case "dueDate":
-                    date = dataValues[i+1];
+                case " name":
+                    paymentName = dataValues[i+1];
                     break;
-                case "isPaid":
-                    isPaid = Boolean.parseBoolean(dataValues[i+1]);
-                    break;
-                case "id":
-                    id = Integer.parseInt(dataValues[i+1]);
-                    break;
-
             }
         }
-        try {
-            return new Payment(id, name, amount, date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new Payment(0, paymentName,paymentAmount, paymentDate);
     }
 
     private static String removeBoundry(String s){

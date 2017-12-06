@@ -1,9 +1,9 @@
-
 package core.gateways;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import core.entities.Payment;
 
 import java.io.FileInputStream;
@@ -23,7 +23,7 @@ import java.text.ParseException;
 //then the id of 123 will be linked with the value of 100 in the "values.data" file, linked with 03192017 in the 
 //"due.data" file and linked with Food in the "category.data" file and linked with false in the "paid.data" file.
 
-public class Storage implements PaymentRepository {
+public class PaymentStorage implements PaymentRepository {
 
 	// File names that will hold the various values for each payment
 	// Each unique payment id will have an item in each data file
@@ -115,8 +115,9 @@ public class Storage implements PaymentRepository {
 			String tempCat = storeCategory.getProperty(stringID);
 			String tempDue = storeDueDate.getProperty(stringID);
 
+			Date paymentDueDate = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH).parse(tempDue);
 			// return a payment object
-			Payment paymentTemp = new Payment(id, tempCat, tempVal, tempDue);
+			Payment paymentTemp = new Payment(id, tempCat, tempVal, paymentDueDate);
 			return paymentTemp;
 
 		} catch (FileNotFoundException e) {

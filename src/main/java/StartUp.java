@@ -5,6 +5,7 @@ import core.entities.BudgetMonth;
 import core.entities.Payment;
 import core.gateways.BudgetMonthRepository;
 import core.gateways.PaymentRepository;
+import core.gateways.PaymentStorage;
 
 import java.util.List;
 
@@ -36,27 +37,7 @@ public class StartUp {
                 return null;
             }
         });
-        PaymentManager.getInstance().setRepo(new PaymentRepository() {
-            @Override
-            public List<Payment> getUnFinishedPayments() {
-                return null;
-            }
-
-            @Override
-            public Payment paymentByID(int id) {
-                return null;
-            }
-
-            @Override
-            public boolean savePayment(Payment payment, int id) {
-                return false;
-            }
-
-            @Override
-            public boolean deletePaymentByID(int id) {
-                return false;
-            }
-        });
+        PaymentManager.getInstance().setRepo(new PaymentStorage());
         MonthManager.getInstance().setRepo(new BudgetMonthRepository() {
             @Override
             public BudgetMonth getMonthFromDate(String date) {

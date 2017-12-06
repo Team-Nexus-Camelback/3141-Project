@@ -23,15 +23,11 @@ public class Payment {
      * @param amount
      * @param dueDate should be in the format of M/d/yy;
      */
-    public Payment(int id, String paymentName, double amount, String dueDate) throws ParseException {
+    public Payment(int id, String paymentName, double amount, Date dueDate) {
         this.id = id;
         this.paymentName = paymentName;
         this.amount = amount;
-        this.dueDate = getDateFromString(dueDate);
-    }
-
-    private Date getDateFromString(String dueDateString) throws ParseException {
-        return DateFormat.getDateInstance(DateFormat.SHORT).parse(dueDateString);
+        this.dueDate = dueDate;
     }
 
     public int daysTillDueDate(){
