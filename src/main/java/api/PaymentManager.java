@@ -1,11 +1,11 @@
 package api;
 
-import core.Dto.Payment.PaymentCreationRequest;
-import core.Dto.Payment.PaymentDeletionRequest;
-import core.Dto.Payment.PaymentUpdateRequest;
+import core.Dto.Payment.*;
 import core.gateways.PaymentRepository;
 import core.usecases.*;
 import models.Payment;
+
+import java.util.List;
 
 /**
  * Created by ryan on 11/15/17.
@@ -39,9 +39,16 @@ public class PaymentManager {
         deletePayment.handleRequest(request);
     }
 
+    public List<Payment> getUnfinishedPayments(){
+        PaymentRequestMessage requestMessage = new PaymentRequestMessage(true);
+        PaymentResponseMessage responseMessage = getPaymentInfo.handleRequest(requestMessage);
+        return ResponseTranslator.paymentsFromResponse(responseMessage.getMessage().toString());
+    }
+
     public void setRepo(PaymentRepository repo){
         getPaymentInfo = new PaymentInfoInterator(repo);
         updatePayment = new UpdatePayment(repo);
         deletePayment = new DeletePayment(repo);
+        createPayment = new CreatePayment(repo);
     }
 }

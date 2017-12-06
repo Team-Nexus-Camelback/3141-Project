@@ -8,11 +8,11 @@ import java.util.Date;
  */
 public class PaymentFactory {
 
-    public static Payment updatePayment(Payment current, String paymentName, double amount, String dueDate) throws ParseException {
+    public static Payment updatePayment(Payment current, String paymentName, double amount, Date dueDate) {
         return new Payment(current.getId(), paymentName, amount, dueDate);
     }
 
-    public static Payment createNewPayment(int id, String name, double amount, Date dueDate) throws ParseException {
-        return new Payment(id, name, amount, dueDate.toString());
+    public static Payment createNewPayment(int id, String name, double amount, Date dueDate){
+        return new Payment(id, name, amount, dueDate);
     }
 }
