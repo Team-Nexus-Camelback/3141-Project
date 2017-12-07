@@ -22,7 +22,7 @@ public class MonthManager {
     private static MonthManager ourInstance = new MonthManager();
     private GetBudgetMonth getBudgetMonth;
     private UpdateBudgetMonth updateBudgetMonth;
-    private HashMap<String, String> lastRequestData = new HashMap<>();
+
 
     public static MonthManager getInstance() {
         return ourInstance;
@@ -38,9 +38,8 @@ public class MonthManager {
 
     public Month getMonthData(String monthDate){
         MonthRequestMessage request = new MonthRequestMessage(true, monthDate);
-        if (!monthDate.equals(lastRequestData.get(MonthKeys.DATE.getName())))
-            lastRequestData = getBudgetMonth.handleRequest(request).getMessage();
-        return translateResponseToModel(lastRequestData);
+        return translateResponseToModel(getBudgetMonth.handleRequest(request).getMessage());
+
     }
 
     public boolean  updateMonth(Month updateMonth){
