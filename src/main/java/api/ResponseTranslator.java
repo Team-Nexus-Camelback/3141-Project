@@ -93,6 +93,8 @@ public class ResponseTranslator {
     }
 
     public static Payment createPaymentFromString(String payments){
+        if (payments.isEmpty())
+            return null;
         payments = payments.substring(1, payments.length() -1);
         payments = payments.replace("=", ",");
         String[] dataValues = payments.split(",");

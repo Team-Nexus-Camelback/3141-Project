@@ -9,9 +9,9 @@ import java.text.DateFormat;
 import org.junit.Test;
 
 import core.entities.Payment;
-import core.gateways.Storage;
+import core.gateways.PaymentStorage;
 
-public class StorageTest {
+public class PaymentStorageTest {
 
 	//ID will always need to be unique for each payment entered
 	private int idtest = 4;		//so change this every run at least
@@ -24,8 +24,8 @@ public class StorageTest {
 	
 	@Test
 	public void SaveTest() throws ParseException {
-		Payment payment = new Payment(idtest, categorytest, valuetest, duedatetest);
-		Storage store = new Storage();
+		Payment payment = new Payment(idtest, categorytest, valuetest, DateFormat.getDateInstance(DateFormat.SHORT).parse(duedatetest));
+		PaymentStorage store = new PaymentStorage();
 		store.savePayment(payment, payment.getId());
 		
 		File testvalues = new File("values.data");
@@ -40,7 +40,7 @@ public class StorageTest {
 	
 	@Test
 	public void LoadTest() throws ParseException {
-		Storage store = new Storage();
+		PaymentStorage store = new PaymentStorage();
 		Payment paymentTemp;
 		paymentTemp = store.paymentByID(idtest);
 		assertTrue(paymentTemp.getId() == idtest);
@@ -52,7 +52,7 @@ public class StorageTest {
 	
 	@Test
 	public void listTest() throws NumberFormatException, ParseException {
-		Storage store = new Storage();
+		PaymentStorage store = new PaymentStorage();
 		assertTrue(store.getUnFinishedPayments().get(0).isPaid() == false);
 	}
 }

@@ -6,8 +6,10 @@ import core.entities.Payment;
 import core.entities.PaymentFactory;
 import core.gateways.PaymentRepository;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -21,16 +23,13 @@ public class CreatePayment extends PaymentInteractor<PaymentCreationRequest> {
 
     @Override
     public PaymentResponseMessage handleRequest(PaymentCreationRequest request) {
-        try {
-            //TODO create a payment id system
-            Payment newPayment = PaymentFactory.createNewPayment(0, request.getName(), request.getAmount(), request.getDueDate());
-            if (!repository.savePayment(newPayment, 0))
-                return errorResponse("Payment did not save correctly");
-            ArrayList<HashMap<String, String>> data = new ArrayList<>();
-            data.add(createResponseData(newPayment));
-            return new PaymentResponseMessage(data, true);
-        } catch (ParseException e) {
-            return errorResponse("Date format not correct");
-        }
+        //TODO create a payment id system
+        Payment newPayment = PaymentFactory.createNewPayment(0, request.getName(), request.getAmount(), request.getDueDate());
+        if (!repository.savePayment(newPayment, 0))
+            return errorResponse("Payment did not save correctly");
+        ArrayList<HashMap<String, String>> data = new ArrayList<>();
+        data.add(createResponseData(newPayment));
+        return new PaymentResponseMessage(data, true);
+
     }
 }

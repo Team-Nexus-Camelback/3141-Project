@@ -7,6 +7,7 @@ import core.entities.Payment;
 import core.gateways.IRequestHandler;
 import core.gateways.PaymentRepository;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,14 +24,16 @@ public class PaymentInfoInterator extends PaymentInteractor<PaymentRequestMessag
 
     @Override
     public PaymentResponseMessage handleRequest(PaymentRequestMessage request) {
-        if (request.needsAllPayments())
-            return responseForAllPayments(repository.getUnFinishedPayments());
-
-        return responseForCertainPayments(request.getPayments());
-
+        try{
+            if (request.needsAllPayments())
+                return responseForAllPayments(repository.getUnFinishedPayments());
+            return responseForCertainPayments(request.getPayments());
+        } catch (ParseException e) {
+            return errorResponse("Wrong date format");
+        }
     }
 
-    private PaymentResponseMessage responseForCertainPayments(List<Integer> payments) {
+    private PaymentResponseMessage responseForCertainPayments(List<Integer> payments) throws ParseException {
         if (payments.isEmpty())
             return errorResponse("Did not specify a payment");
 

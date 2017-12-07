@@ -19,6 +19,11 @@ public class MonthStorage implements BudgetMonthRepository {
 	}
 
 	@Override
+	public boolean deletePurchase(int id) {
+		return false;
+	}
+
+	@Override
 	public List<BudgetMonth> monthsFromYear(String year) {
 		// TODO Auto-generated method stub
 		return null;

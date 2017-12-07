@@ -18,12 +18,11 @@ public class Payment {
     private SimpleObjectProperty<Date> dueDate;
     private int id;
 
-    public Payment(int id, String name, double amount, String dueDate) throws ParseException {
+    public Payment(int id, String name, double amount, Date dueDate) {
         this.id = id;
         this.name = new SimpleStringProperty(name);
         this.amount = new SimpleDoubleProperty(amount);
-        Date date = DateFormat.getDateInstance(DateFormat.SHORT).parse(dueDate);
-        this.dueDate = new SimpleObjectProperty<>(date);
+        this.dueDate = new SimpleObjectProperty<>(dueDate);
     }
 
     public String getName() {

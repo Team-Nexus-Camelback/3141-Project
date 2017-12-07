@@ -8,6 +8,7 @@ import core.gateways.PaymentRepository;
 
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +22,7 @@ public class UpdatePaymentTest {
     private UpdatePayment setupTestClass(){
         try {
             return new UpdatePayment(new PaymentRepository() {
-                private Payment testPayment = new Payment(0,"Test", 420, "1/17/18");
+                private Payment testPayment = new Payment(0,"Test", 420, new Date(2017, 12, 20));
                 @Override
                 public List<Payment> getUnFinishedPayments() {
                     return null;
