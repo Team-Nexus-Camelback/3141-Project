@@ -3,6 +3,7 @@ import api.PaymentManager;
 import api.PurchaseManager;
 import core.entities.BudgetMonth;
 import core.entities.Payment;
+import core.entities.Purchase;
 import core.gateways.BudgetMonthRepository;
 import core.gateways.PaymentRepository;
 import core.gateways.PaymentStorage;
@@ -14,53 +15,39 @@ import java.util.List;
  */
 public class StartUp {
     public static void giveManagerRepos(){
-        PurchaseManager.getInstance().setRepo(new BudgetMonthRepository() {
-            @Override
-            public BudgetMonth getMonthFromDate(String date) {
-                BudgetMonth month = new BudgetMonth("11-2017", 1000);
-                month.addNewCategoryBudgetIfNew("Food", 200);
-                return month;
-            }
-
-            @Override
-            public boolean saveBudgetMonth(BudgetMonth month) {
-                return false;
-            }
-
-            @Override
-            public boolean deletePurchase(int id) {
-                return false;
-            }
-
-            @Override
-            public List<BudgetMonth> monthsFromYear(String year) {
-                return null;
-            }
-        });
+        testRepo repo = new testRepo();
+        PurchaseManager.getInstance().setRepo(repo);
         PaymentManager.getInstance().setRepo(new PaymentStorage());
-        MonthManager.getInstance().setRepo(new BudgetMonthRepository() {
-            @Override
-            public BudgetMonth getMonthFromDate(String date) {
-                BudgetMonth month = new BudgetMonth("11-2017", 1000);
-                month.addNewCategoryBudgetIfNew("Food", 200);
-                return month;
-            }
+        MonthManager.getInstance().setRepo(repo);
+    }
+}
 
-            @Override
-            public boolean saveBudgetMonth(BudgetMonth month) {
-                return false;
-            }
+class testRepo implements BudgetMonthRepository{
 
-            @Override
-            public boolean deletePurchase(int id) {
-                return false;
-            }
+    private BudgetMonth month = new BudgetMonth("12-2017", 1000);
 
-            @Override
-            public List<BudgetMonth> monthsFromYear(String year) {
-                return null;
-            }
-        });
+    public testRepo() {
+        month.addPurchase(new Purchase(0, 20, "Food"));
+    }
 
+    @Override
+    public BudgetMonth getMonthFromDate(String date) {
+        return month;
+    }
+
+    @Override
+    public boolean saveBudgetMonth(BudgetMonth month) {
+        this.month = month;
+        return true;
+    }
+
+    @Override
+    public boolean deletePurchase(int id) {
+        return true;
+    }
+
+    @Override
+    public List<BudgetMonth> monthsFromYear(String year) {
+        return null;
     }
 }

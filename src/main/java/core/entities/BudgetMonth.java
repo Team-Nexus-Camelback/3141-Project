@@ -16,6 +16,7 @@ public class BudgetMonth {
     public BudgetMonth(String date, double allocateMoney) {
         this.monthDate = date;
         this.amountSpendingForMonth = allocateMoney;
+        purchasesList.ensureCapacity(10);
     }
 
     public void addPurchase(Purchase purchase){

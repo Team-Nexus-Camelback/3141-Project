@@ -8,6 +8,7 @@ import core.entities.PaymentFactory;
 import core.gateways.IRequestHandler;
 import core.gateways.PaymentRepository;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,9 +25,9 @@ public class UpdatePayment extends PaymentInteractor<PaymentUpdateRequest> {
 
     @Override
     public PaymentResponseMessage handleRequest(PaymentUpdateRequest request) {
-        Payment currentPayment = repository.paymentByID(request.getId());
         try {
-            Payment updatedPayment = PaymentFactory.updatePayment(currentPayment, request.getName(), request.getAmount(), request.getDate());
+            Payment currentPayment = repository.paymentByID(request.getId());
+            Payment updatedPayment = PaymentFactory.updatePayment(currentPayment, request.getName(), request.getAmount(), DateFormat.getDateInstance(DateFormat.SHORT).parse(request.getDate()));
             repository.savePayment(updatedPayment, updatedPayment.getId());
             ArrayList<HashMap<String ,String>> responseData = new ArrayList<>();
             responseData.add(createResponseData(updatedPayment));
