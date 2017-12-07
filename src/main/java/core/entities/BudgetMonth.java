@@ -23,6 +23,10 @@ public class BudgetMonth {
         purchasesList.add(purchase.getId(), purchase);
     }
 
+    public void updatePurchase(int id, Purchase updatedPurchase){
+        purchasesList.add(id, updatedPurchase);
+    }
+
     public void addPayment(Payment payment){
         paymentList.add(payment.getId(), payment);
     }

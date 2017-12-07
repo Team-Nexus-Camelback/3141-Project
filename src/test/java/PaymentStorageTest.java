@@ -1,6 +1,10 @@
+
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.DateFormat;
 
 import org.junit.Test;
 
@@ -14,13 +18,15 @@ public class StorageTest {
 	private double valuetest = 399.04;
 	private boolean statustest = false;
 	private String categorytest = "Gas";
-	private String duedatetest = "03212001";
+	private Date now = new Date();
+	DateFormat shortdf = DateFormat.getDateInstance(DateFormat.SHORT);
+	private String duedatetest = shortdf.format(now);
 	
 	@Test
-	public void SaveTest() {
-		Payment payment = new Payment(idtest, valuetest, statustest, categorytest, duedatetest);
+	public void SaveTest() throws ParseException {
+		Payment payment = new Payment(idtest, categorytest, valuetest, duedatetest);
 		Storage store = new Storage();
-		store.savePayment(payment, payment.getID());
+		store.savePayment(payment, payment.getId());
 		
 		File testvalues = new File("values.data");
 		File testdue = new File("due.data");
@@ -33,20 +39,21 @@ public class StorageTest {
 	}
 	
 	@Test
-	public void LoadTest() {
+	public void LoadTest() throws ParseException {
 		Storage store = new Storage();
 		Payment paymentTemp;
 		paymentTemp = store.paymentByID(idtest);
-		assertTrue(paymentTemp.getID() == idtest);
-		assertTrue(paymentTemp.getValue() == valuetest);
-		assertTrue(paymentTemp.getStatus() == statustest);
-		assertTrue(paymentTemp.getCategory().compareTo(categorytest) == 0);
+		assertTrue(paymentTemp.getId() == idtest);
+		assertTrue(paymentTemp.getAmount() == valuetest);
+		assertTrue(paymentTemp.isPaid() == statustest);
+		assertTrue(paymentTemp.getPaymentName().compareTo(categorytest) == 0);
 		assertTrue(paymentTemp.getDueDate().compareTo(duedatetest) == 0);
 	}
 	
 	@Test
-	public void listTest() {
+	public void listTest() throws NumberFormatException, ParseException {
 		Storage store = new Storage();
-		assertTrue(store.getUnFinishedPayments().get(0).getStatus() == false);
+		assertTrue(store.getUnFinishedPayments().get(0).isPaid() == false);
 	}
 }
+

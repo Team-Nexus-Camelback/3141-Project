@@ -18,6 +18,8 @@ public interface BudgetMonthRepository {
 
     boolean saveBudgetMonth(BudgetMonth month);
 
+    boolean deletePurchase(int id);
+
     /**
      *
      * @param year a string that will specify the year to select months from

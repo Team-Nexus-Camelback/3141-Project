@@ -11,6 +11,7 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        StartUp.giveManagerRepos();
         Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         primaryStage.setTitle("BUDGET APP TITLE");
         primaryStage.setScene(new Scene(root, 1600, 900));

@@ -1,8 +1,9 @@
 package core.gateways;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import core.entities.Payment;
 
 import java.io.FileInputStream;
@@ -11,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 
 //Assuming "Payments" has (Payment Value, Payment due date, Payment Category,
 //and a Payment Has Been Paid) properties.
@@ -21,7 +23,7 @@ import java.io.OutputStream;
 //then the id of 123 will be linked with the value of 100 in the "values.data" file, linked with 03192017 in the 
 //"due.data" file and linked with Food in the "category.data" file and linked with false in the "paid.data" file.
 
-public class Storage implements PaymentRepository {
+public class PaymentStorage implements PaymentRepository {
 
 	// File names that will hold the various values for each payment
 	// Each unique payment id will have an item in each data file
@@ -50,7 +52,7 @@ public class Storage implements PaymentRepository {
 
 	// Returns an arraylist of payments that are not paid (failed status) yet.
 	@Override
-	public List<Payment> getUnFinishedPayments() {
+	public List<Payment> getUnFinishedPayments() throws NumberFormatException, ParseException {
 		// initialize arraylist that is returned at the end
 		ArrayList<Payment> paylist = new ArrayList<Payment>();
 		try {
@@ -88,7 +90,7 @@ public class Storage implements PaymentRepository {
 	}
 
 	@Override
-	public Payment paymentByID(int id) {
+	public Payment paymentByID(int id) throws ParseException {
 		try {
 			String stringID = Integer.toString(id);
 
@@ -113,8 +115,9 @@ public class Storage implements PaymentRepository {
 			String tempCat = storeCategory.getProperty(stringID);
 			String tempDue = storeDueDate.getProperty(stringID);
 
+			Date paymentDueDate = new SimpleDateFormat("EEE MMM dd kk:mm:ss z yyyy", Locale.ENGLISH).parse(tempDue);
 			// return a payment object
-			Payment paymentTemp = new Payment(id, tempVal, tempStat, tempCat, tempDue);
+			Payment paymentTemp = new Payment(id, tempCat, tempVal, paymentDueDate);
 			return paymentTemp;
 
 		} catch (FileNotFoundException e) {
@@ -148,10 +151,10 @@ public class Storage implements PaymentRepository {
 			outputPaid = new FileOutputStream(paidFile, true);
 
 			// set the values to be stored in the File
-			storeVal.setProperty(Integer.toString(id), Double.toString(payment.getValue()));
+			storeVal.setProperty(Integer.toString(id), Double.toString(payment.getAmount()));
 			storeDueDate.setProperty(Integer.toString(id), payment.getDueDate());
-			storeCategory.setProperty(Integer.toString(id), payment.getCategory());
-			storePaid.setProperty(Integer.toString(id), Boolean.toString(payment.getStatus()));
+			storeCategory.setProperty(Integer.toString(id), payment.getPaymentName());
+			storePaid.setProperty(Integer.toString(id), Boolean.toString(payment.isPaid()));
 
 			// save the properties File without extra comments after
 			storeVal.store(outputVal, null);
@@ -178,32 +181,38 @@ public class Storage implements PaymentRepository {
 		return true;
 	}
 
+	@Override
+	public boolean deletePaymentByID(int id) {
+		return false;
+	}
+
 	// returns the value of the payment with id
-	public double grabValue(int id) {
+	public double grabValue(int id) throws ParseException {
 		double tempval;
-		tempval = paymentByID(id).getValue();
+		tempval = paymentByID(id).getAmount();
 		return tempval;
 	}
 
 	// return the category of the payment with id
-	public String grabCategory(int id) {
+	public String grabCategory(int id) throws ParseException {
 		String tempcat;
-		tempcat = paymentByID(id).getCategory();
+		tempcat = paymentByID(id).getPaymentName();
 		return tempcat;
 	}
 
 	// return the duedate of the payment with id
-	public String grabDate(int id) {
+	public String grabDate(int id) throws ParseException {
 		String tempdate;
 		tempdate = paymentByID(id).getDueDate();
 		return tempdate;
 	}
 
 	// return whether payment was paid or not
-	public boolean grabStatus(int id) {
+	public boolean grabStatus(int id) throws ParseException {
 		boolean tempstatus;
-		tempstatus = paymentByID(id).getStatus();
+		tempstatus = paymentByID(id).isPaid();
 		return tempstatus;
 	}
 
 }
+
