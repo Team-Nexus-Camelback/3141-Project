@@ -27,7 +27,7 @@ class testRepo implements BudgetMonthRepository{
     private BudgetMonth month = new BudgetMonth("12-2017", 1000);
 
     public testRepo() {
-        month.addPurchase(new Purchase(0, 20, "Food"));
+        month.addPurchase(new Purchase(0,"Chipotle", 20, "Food"));
     }
 
     @Override

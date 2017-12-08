@@ -95,4 +95,12 @@ public class BudgetMonth {
         });
         return returnList;
     }
+
+    public List<Purchase> getPurchasesList() {
+        return purchasesList;
+    }
+
+    public List<Payment> getPaymentList() {
+        return paymentList;
+    }
 }

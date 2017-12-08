@@ -19,8 +19,8 @@ class MonthGrapherTest {
         BudgetMonth testMonth = new BudgetMonth("02-1998", 1000);
         testMonth.addNewCategoryBudgetIfNew("Hello", 200);
         testMonth.addNewCategoryBudgetIfNew("World", 400);
-        testMonth.addPurchase(new Purchase(0, 100, "Hello"));
-        testMonth.addPurchase(new Purchase(1, 20, "World"));
+        testMonth.addPurchase(new Purchase(0, "Test", 100, "Hello"));
+        testMonth.addPurchase(new Purchase(1, "Foo", 20, "World"));
         return testMonth;
     }
 

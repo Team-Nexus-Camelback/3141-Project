@@ -12,6 +12,7 @@ public class PurchaseFactory {
         Double purchaseAmount = request.getAmount();
         String purchaseCategory = request.getCategory();
         int purchaseID = request.getId();
-        return new Purchase(purchaseID, purchaseAmount, purchaseCategory);
+        String name = request.getName();
+        return new Purchase(purchaseID, name, purchaseAmount, purchaseCategory);
     }
 }

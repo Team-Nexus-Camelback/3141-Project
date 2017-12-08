@@ -36,7 +36,7 @@ public class PurchaseManager {
     }
 
     public void savePurchaseData(Purchase purchase){
-        PurchaseCreationRequest request = new PurchaseCreationRequest(purchase.getId(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
+        PurchaseCreationRequest request = new PurchaseCreationRequest(purchase.getId(), purchase.getName(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
         createPurchaseInteractor.handleRequest(request);
     }
 
@@ -46,7 +46,7 @@ public class PurchaseManager {
     }
 
     public void updatePurchase(Purchase purchase){
-        PurchaseUpdateRequest updateRequest = new PurchaseUpdateRequest(purchase.getId(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
+        PurchaseUpdateRequest updateRequest = new PurchaseUpdateRequest(purchase.getId(), purchase.getName(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
         updatePurchase.handleRequest(updateRequest);
     }
 
