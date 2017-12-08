@@ -12,12 +12,19 @@ public class PurchaseCreationRequest implements IRequest, PurchaseRequest {
     private String category;
     private String date;
     private int id;
+    private String name;
 
-    public PurchaseCreationRequest(int id,double amount, String category, String date) {
+    public PurchaseCreationRequest(int id, String name, double amount, String category, String date) {
         this.amount = amount;
         this.category = category;
         this.date = date;
         this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     public Double getAmount() {
