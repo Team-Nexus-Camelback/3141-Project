@@ -18,7 +18,7 @@ public interface BudgetMonthRepository {
 
     boolean saveBudgetMonth(BudgetMonth month);
 
-    boolean deletePurchase(int id);
+    boolean deletePurchase(String monthDate, int id);
 
     /**
      *

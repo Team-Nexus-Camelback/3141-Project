@@ -41,7 +41,7 @@ public class PurchaseManager {
     }
 
     public void deletePurchase(Purchase purchase){
-        PurchaseDeletionRequest request = new PurchaseDeletionRequest(purchase.getId());
+        PurchaseDeletionRequest request = new PurchaseDeletionRequest(purchase.getDate(), purchase.getId());
         deletePurchase.handleRequest(request);
     }
 
