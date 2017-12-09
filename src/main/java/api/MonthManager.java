@@ -42,9 +42,16 @@ public class MonthManager {
 
     }
 
-    public boolean  updateMonth(Month updateMonth){
+    public boolean updateMonth(Month updateMonth){
         MonthUpdateRequest request = new MonthUpdateRequest(updateMonth.getMonthDate(), updateMonth.getSpendingAmount(), updateMonth.getOverview());
         return updateBudgetMonth.handleRequest(request) == null;
+    }
+
+    public Month addCategory(Month month ,String category, double amount){
+        month.getCategories().put(category, amount);
+        if (updateMonth(month))
+            return month;
+        return null;
     }
 
     public void compareMonthsData(String ... monthsToCompare){
