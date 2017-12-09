@@ -24,6 +24,14 @@ public class Purchase {
         this.purchaseName = name;
     }
 
+    public Purchase(double amount, Date purchaseDate, String purchaseName, String category, int id) {
+        this.amount = amount;
+        this.purchaseDate = purchaseDate;
+        this.purchaseName = purchaseName;
+        this.category = category;
+        this.id = id;
+    }
+
     public double getAmount() {
         return amount;
     }

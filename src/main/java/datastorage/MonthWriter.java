@@ -3,6 +3,7 @@ package datastorage;
 import core.entities.BudgetMonth;
 import core.entities.Purchase;
 
+import core.util.MonthGrapher;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -16,7 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import java.util.function.Predicate;
+
 
 
 /**
@@ -77,6 +78,8 @@ public class MonthWriter {
         element.getChild("budget").setText(String.valueOf(newMonthData.getAmountSpendingForMonth()));
         element.removeChildren("Purchase");
         newMonthData.getPurchasesList().forEach(purchase -> addPurchaseData(element, purchase));
+        element.removeChildren("Category");
+        addCategoriesToMonth(element, newMonthData);
     }
 
     private void addAttributeToElement(Element element, String type, Object value){
@@ -99,7 +102,20 @@ public class MonthWriter {
         Element monthElement =  new Element("month");
         monthElement.setAttribute("date", month.getMonthDate());
         addAttributeToElement(monthElement, "budget", month.getAmountSpendingForMonth());
+        addCategoriesToMonth(monthElement, month);
         return monthElement;
+    }
+
+    private void addCategoriesToMonth(Element monthElement, BudgetMonth month) {
+        List<String> percents = new MonthGrapher(month).graphPercentageOfCategories();
+        month.allPurchaseCategories().forEach(s -> {
+            Element catEle = new Element("Category");
+            catEle.setAttribute("name", s);
+            String percent = percents.get(percents.indexOf(s) + 1);
+            catEle.setAttribute("percent", percent);
+            catEle.addContent(String.valueOf(month.categoryBudget(s)));
+            monthElement.addContent(catEle);
+        });
     }
 
     private boolean writeToXML(){

@@ -42,7 +42,7 @@ class testRepo implements BudgetMonthRepository{
     }
 
     @Override
-    public boolean deletePurchase(int id) {
+    public boolean deletePurchase(String date, int id) {
         return true;
     }
 
