@@ -32,7 +32,7 @@ class CreatePurchaseInteractorTest {
     }
 
     private PurchaseCreationRequest createSimpleRequest() {
-        return new PurchaseCreationRequest(0, 19.99, "Toys", "10-2017");
+        return new PurchaseCreationRequest(0, "Elmo", 19.99, "Toys", "10-2017");
 
     }
 }

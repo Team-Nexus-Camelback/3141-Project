@@ -5,6 +5,8 @@ package core.Dto.Purchase;
  */
 public interface PurchaseRequest {
 
+    String getName();
+
     Double getAmount();
 
     String getCategory();

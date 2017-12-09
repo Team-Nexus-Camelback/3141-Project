@@ -14,13 +14,14 @@ public class Purchase {
     private String category;
     private int id;
 
-    public Purchase(int id, double amount, String category) {
+    public Purchase(int id, String name,  double amount, String category) {
         this.id = id;
         this.amount = amount;
         this.category = category;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         this.purchaseDate = calendar.getTime();
+        this.purchaseName = name;
     }
 
     public double getAmount() {
@@ -40,6 +41,10 @@ public class Purchase {
     }
 
     public Date getDate(){
+        return purchaseDate;
+    }
+
+    public Date getPurchaseDate() {
         return purchaseDate;
     }
 

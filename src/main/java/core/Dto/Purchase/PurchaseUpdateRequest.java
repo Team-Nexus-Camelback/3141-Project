@@ -10,12 +10,19 @@ public class PurchaseUpdateRequest implements IRequest, PurchaseRequest {
     private String category;
     private String date;
     private int id;
+    private String name;
 
-    public PurchaseUpdateRequest(int id, double amount, String category, String date) {
+    public PurchaseUpdateRequest(int id, String name, double amount, String category, String date) {
         this.amount = amount;
         this.category = category;
         this.date = date;
         this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
