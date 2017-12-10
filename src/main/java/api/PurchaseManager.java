@@ -30,10 +30,7 @@ public class PurchaseManager {
         return ourInstance;
     }
 
-    private PurchaseManager() {
-        // this is a temporary setup for this class
-
-    }
+    private PurchaseManager() {}
 
     public void savePurchaseData(Purchase purchase){
         PurchaseCreationRequest request = new PurchaseCreationRequest(purchase.getId(), purchase.getName(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
@@ -41,7 +38,7 @@ public class PurchaseManager {
     }
 
     public void deletePurchase(Purchase purchase){
-        PurchaseDeletionRequest request = new PurchaseDeletionRequest(purchase.getId());
+        PurchaseDeletionRequest request = new PurchaseDeletionRequest(purchase.getDate(), purchase.getId());
         deletePurchase.handleRequest(request);
     }
 

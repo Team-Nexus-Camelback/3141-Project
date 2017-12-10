@@ -31,9 +31,11 @@ public class DummyBudgetRepo implements BudgetMonthRepository {
     }
 
     @Override
-    public boolean deletePurchase(int id) {
+    public boolean deletePurchase(String monthDate, int id) {
         return false;
     }
+
+
 
     @Override
     public List<BudgetMonth> monthsFromYear(String year) {

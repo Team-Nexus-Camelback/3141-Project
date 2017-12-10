@@ -18,7 +18,7 @@ public class DeletePurchase extends AbstractHandler<PurchaseDeletionRequest, Pur
 
     @Override
     public PurchaseResponseMessage handleRequest(PurchaseDeletionRequest request) {
-        if (repository.deletePurchase(request.getId()))
+        if (repository.deletePurchase(request.getMonthDate(), request.getId()))
             return errorResponse("Failed to delete purchase");
         return null;
     }

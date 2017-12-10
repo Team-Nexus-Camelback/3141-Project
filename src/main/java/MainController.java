@@ -32,7 +32,7 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.FloatStringConverter;
 import models.Purchase;
 import models.Month;
-//import org.controlsfx.dialog.LoginDialog;
+
 
 /**
  * FXML Controller class
@@ -110,7 +110,7 @@ public class MainController implements Initializable {
     }
 
     public void saveData(){
-        //Save function calls
+        MonthManager.getInstance().updateMonth(month);
         Alert saved = new Alert(Alert.AlertType.INFORMATION);
         saved.setHeaderText(null);
         saved.setContentText("Your data has been saved!");
