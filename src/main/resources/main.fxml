@@ -12,8 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0"
-            prefWidth="1600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="MainController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
@@ -42,23 +42,26 @@
         </MenuBar>
     </top>
     <center>
-        <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE"
+        <TabPane prefHeight="600.0" prefWidth="800.0" minHeight="-Infinity" maxHeight="Infinity" minWidth="-Infinity" maxWidth="Infinity" side="LEFT" tabClosingPolicy="UNAVAILABLE"
                  BorderPane.alignment="CENTER">
             <tabs>
                 <!--This is the "main" view. It will have the add button so people can add their perchases-->
                 <Tab text="Main View">
                     <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                        <BorderPane minHeight="-Infinity" maxHeight="Infinity" minWidth="-Infinity" maxWidth="Infinity" prefHeight="200.0" prefWidth="200.0">
                             <top>
                                 <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER">
                                     <!-- Code for taking in arraylist of months -->
                                 </ChoiceBox>
                             </top>
                             <center>
-                                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                    <children>
+                                <GridPane layoutX="7.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" maxWidth="Infinity"/>
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" maxWidth="Infinity"/>
+                                    </columnConstraints>
 
-                                        <GridPane layoutX="7.0" layoutY="39.0" prefHeight="781.0" prefWidth="879.0">
+                                        <GridPane layoutX="7.0" layoutY="39.0" prefHeight="781.0" prefWidth="879.0" minWidth="-Infinity" minHeight="-Infinity" GridPane.columnIndex="0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="450.0"
                                                                    prefWidth="450.0"/>
@@ -83,7 +86,7 @@
                                                         <BorderPane minHeight="0.0" minWidth="100.0" prefHeight="160.0"
                                                                     prefWidth="100.0">
                                                             <center>
-                                                                <BarChart fx:id="bc" BorderPane.alignment="CENTER">
+                                                                <BarChart fx:id="bc" BorderPane.alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity">
                                                                     <xAxis>
                                                                         <CategoryAxis fx:id="xAxis" side="BOTTOM"/>
                                                                     </xAxis>
@@ -171,16 +174,8 @@
                                                            GridPane.rowIndex="1"/>
                                             </children>
                                         </GridPane>
-                                    </children>
-                                </AnchorPane>
-                            </center>
-                        </BorderPane>
-                    </content>
-                </Tab>
-                <!--This will be the tab that has the view for seeing the graph and information that will be on that page-->
-                <Tab text="Graph View">
-                    <content>
-                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                </GridPane>
+                                    </center>
                             <top>
                                 <ChoiceBox prefWidth="150.0" BorderPane.alignment="CENTER"/>
                             </top>
