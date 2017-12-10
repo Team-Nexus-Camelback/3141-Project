@@ -30,7 +30,7 @@ public class GetBudgetMonth implements IRequestHandler<MonthRequestMessage,Month
     }
 
     private MonthResponseMessage createResponseFormMonths(String[] strings) {
-        MonthComparer.getComparisonDataFromMonths(strings);
+      //  MonthComparer.getComparisonDataFromMonths(strings);
         return null;
     }
 

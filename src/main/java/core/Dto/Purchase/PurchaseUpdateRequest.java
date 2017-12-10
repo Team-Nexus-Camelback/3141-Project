@@ -2,19 +2,17 @@ package core.Dto.Purchase;
 
 import core.gateways.IRequest;
 
-
 /**
- * Created by ryan on 10/17/17.
- * Use case for creating purchase, successfully creating a purchase will return the purchase saved
+ * Created by ryan on 11/13/17.
  */
-public class PurchaseCreationRequest implements IRequest, PurchaseRequest {
-    private double amount;
+public class PurchaseUpdateRequest implements IRequest, PurchaseRequest {
+    private Double amount;
     private String category;
     private String date;
     private int id;
     private String name;
 
-    public PurchaseCreationRequest(int id, String name, double amount, String category, String date) {
+    public PurchaseUpdateRequest(int id, String name, double amount, String category, String date) {
         this.amount = amount;
         this.category = category;
         this.date = date;
@@ -27,19 +25,24 @@ public class PurchaseCreationRequest implements IRequest, PurchaseRequest {
         return name;
     }
 
+    @Override
     public Double getAmount() {
         return amount;
     }
 
+    @Override
     public String getCategory() {
         return category;
     }
 
+    @Override
     public String getDate() {
         return date;
     }
 
+    @Override
     public int getId() {
         return id;
     }
+
 }

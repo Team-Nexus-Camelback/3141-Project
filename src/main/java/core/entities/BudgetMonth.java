@@ -16,11 +16,16 @@ public class BudgetMonth {
     public BudgetMonth(String date, double allocateMoney) {
         this.monthDate = date;
         this.amountSpendingForMonth = allocateMoney;
+        purchasesList.ensureCapacity(10);
     }
 
     public void addPurchase(Purchase purchase){
         addNewCategoryBudgetIfNew(purchase.getCategory(), purchase.getAmount());
         purchasesList.add(purchase.getId(), purchase);
+    }
+
+    public void updatePurchase(int id, Purchase updatedPurchase){
+        purchasesList.add(id, updatedPurchase);
     }
 
     public void addPayment(Payment payment){
@@ -89,5 +94,13 @@ public class BudgetMonth {
             }
         });
         return returnList;
+    }
+
+    public List<Purchase> getPurchasesList() {
+        return purchasesList;
+    }
+
+    public List<Payment> getPaymentList() {
+        return paymentList;
     }
 }

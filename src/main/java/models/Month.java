@@ -19,11 +19,12 @@ public class Month {
     private SimpleDoubleProperty spendingAmount;
     private SimpleListProperty<Purchase> purchases;
     private SimpleListProperty<Payment> payments;
-    private SimpleMapProperty<String, Double> categories;
+    private SimpleMapProperty<String, Double> categories; // for the category bar chart
+    private SimpleMapProperty<String, Double> overview;  // for overview pie chart
 
     public Month(String date, double budgetAmount,
                  HashMap<String, Double> categories,
-                 List<Purchase> purchases, List<Payment> payments)
+                 List<Purchase> purchases, List<Payment> payments, HashMap<String, Double> overview)
     {
         this.monthDate = new SimpleStringProperty(date);
         this.spendingAmount = new SimpleDoubleProperty(budgetAmount);
@@ -33,6 +34,8 @@ public class Month {
         this.purchases = new SimpleListProperty<>(purchaseObservableList);
         ObservableList<Payment> paymentObservableList = FXCollections.observableList(payments);
         this.payments = new SimpleListProperty<>(paymentObservableList);
+        ObservableMap<String, Double> overViewMap = FXCollections.observableMap(overview);
+        this.overview = new SimpleMapProperty<>(overViewMap);
     }
 
     public String getMonthDate() {
@@ -74,4 +77,13 @@ public class Month {
     public SimpleMapProperty<String, Double> categoriesProperty() {
         return categories;
     }
+
+    public ObservableMap<String, Double> getOverview() {
+        return overview.get();
+    }
+
+    public SimpleMapProperty<String, Double> overviewProperty() {
+        return overview;
+    }
+
 }

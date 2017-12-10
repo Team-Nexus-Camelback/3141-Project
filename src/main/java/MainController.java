@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 
-import java.awt.event.MouseEvent;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import api.MonthManager;
 import api.PurchaseManager;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -16,21 +20,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.FloatStringConverter;
 import models.Purchase;
 import models.Month;
-import javafx.scene.*;
+import org.controlsfx.dialog.LoginDialog;
 
 /**
  * FXML Controller class
@@ -42,7 +44,7 @@ public class MainController implements Initializable {
     @FXML
     public TableColumn<Purchase, String> dateCol;
     public TableColumn<Purchase, String> nameCol;
-    public TableColumn<Purchase, Float> amountCol;
+    public TableColumn<Purchase, Double> amountCol;
     public TableColumn<Purchase, String> catCol;
 
     @FXML
@@ -70,26 +72,41 @@ public class MainController implements Initializable {
 
     final ObservableList<Purchase> data = FXCollections.observableArrayList();
 
-    final ObservableList<Month> bcData = FXCollections.observableArrayList();
-    
+
+    private Month month = MonthManager.getInstance().getMonthData("11-2017");
+
     @FXML
     protected void addPurchaseEvent(ActionEvent e) throws IOException{
         try {
-            DateFormat.getDateInstance(DateFormat.SHORT).parse(dateField.getText());
-            PurchaseManager.getInstance().savePurchaseData(0, categoryField.getText(), Float.parseFloat(amountField.getText()));
-            Purchase purchase = new Purchase(Float.parseFloat(amountField.getText()), dateField.getText(), categoryField.getText(), nameField.getText());
-            data.add(purchase);
-            dateField.setText("Date");
-            categoryField.setText("Category");
-            amountField.setText("Amount");
-            nameField.setText("Name");
-        } catch (Exception error)
-        {
-            Alert saved = new Alert(Alert.AlertType.INFORMATION);
-            saved.setHeaderText(null);
-            saved.setContentText("Date Formatted Wrong. Format: M/DD/YY\n Or Invalid Amount");
-            saved.showAndWait();
-        }
+            if (month.getCategories().keySet().contains(categoryField.getText())) {
+                DateFormat.getDateInstance(DateFormat.SHORT).parse(dateField.getText());
+                Purchase purchase = new Purchase(0, Double.parseDouble(amountField.getText()), dateField.getText(), categoryField.getText(), nameField.getText());
+                PurchaseManager.getInstance().savePurchaseData(purchase);
+                data.add(purchase);
+                dateField.setText("Date");
+                categoryField.setText("Category");
+                amountField.setText("Amount");
+                nameField.setText("Name");
+                month = MonthManager.getInstance().getMonthData("11-2017");
+                bc.getData().forEach(new Consumer<XYChart.Series<String, Double>>() {
+                    @Override
+                    public void accept(XYChart.Series<String, Double> stringDoubleSeries) {
+                        double newePercent = month.getCategories().get(stringDoubleSeries.getName());
+                        stringDoubleSeries.getData().get(0).setYValue(newePercent);
+                    }
+                });
+            }
+            else {
+                
+            }
+        } catch(Exception error)
+            {
+                Alert saved = new Alert(Alert.AlertType.INFORMATION);
+                saved.setHeaderText(null);
+                saved.setContentText("Date Formatted Wrong. Format: M/DD/YY\n Or Invalid Amount");
+                saved.showAndWait();
+            }
+
     }
 
     public void saveData(){
@@ -169,15 +186,15 @@ public class MainController implements Initializable {
         );
 
         //Amount Column declaration and handler to check if its a double when someone edits
-        amountCol.setCellValueFactory(new PropertyValueFactory<Purchase, Float>("Amount"));
-        amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        amountCol.setCellValueFactory(new PropertyValueFactory<Purchase, Double>("Amount"));
+        amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         try {
         amountCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Purchase, Float>>() {
+                new EventHandler<TableColumn.CellEditEvent<Purchase, Double>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<Purchase, Float> event) {
+                    public void handle(TableColumn.CellEditEvent<Purchase, Double> event) {
 
-                            final Float value = event.getNewValue() != null ?
+                            final Double value = event.getNewValue() != null ?
                                     event.getNewValue() : event.getOldValue();
                             ((Purchase) event.getTableView().getItems().get(
                                     event.getTablePosition().getRow())
@@ -195,15 +212,29 @@ public class MainController implements Initializable {
 
         xAxis.setLabel("Category");
         yAxis.setLabel("Percentage");
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(100);
 
-        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
-        bc.getData().add(series1);
 
-        ObservableList<PieChart.Data> pieData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Unallocated", 100),
-                        new PieChart.Data("Food", 30)
-        );
+
+        // loads in purchase from the system
+        data.addAll(month.getPurchases());
+
+        // adds the data to bar graph
+        month.getCategories().forEach((s, aDouble) -> {
+            XYChart.Series<String, Double> catSeries = new XYChart.Series<>(s, FXCollections.observableArrayList(new XYChart.Data<>("", aDouble)));
+            bc.getData().add(catSeries);
+        });
+
+
+
+        // add the data to pie chart
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+        month.getOverview().forEach((s, aDouble) -> {
+            PieChart.Data cat = new PieChart.Data(s, aDouble);
+            pieData.add(cat);
+        });
+
 
         pieData.forEach(data ->
         data.nameProperty().bind(
@@ -219,6 +250,8 @@ public class MainController implements Initializable {
 
 
         }
+
+
 
     }    
     

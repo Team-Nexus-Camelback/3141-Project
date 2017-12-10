@@ -8,22 +8,23 @@ import java.util.Date;
  * Created by ryan on 10/17/17.
  */
 public class Purchase {
-    private float amount;
+    private double amount;
     private Date purchaseDate;
     private String purchaseName;
     private String category;
     private int id;
 
-    public Purchase(int id, float amount, String category) {
+    public Purchase(int id, String name,  double amount, String category) {
         this.id = id;
         this.amount = amount;
         this.category = category;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         this.purchaseDate = calendar.getTime();
+        this.purchaseName = name;
     }
 
-    public float getAmount() {
+    public double getAmount() {
         return amount;
     }
 
@@ -40,6 +41,10 @@ public class Purchase {
     }
 
     public Date getDate(){
+        return purchaseDate;
+    }
+
+    public Date getPurchaseDate() {
         return purchaseDate;
     }
 

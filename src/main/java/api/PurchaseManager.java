@@ -3,15 +3,17 @@ package api;
 
 import core.Dto.Purchase.PurchaseCreationRequest;
 
-import core.entities.BudgetMonth;
+
+import core.Dto.Purchase.PurchaseDeletionRequest;
+import core.Dto.Purchase.PurchaseUpdateRequest;
 import core.gateways.BudgetMonthRepository;
 import core.usecases.CreatePurchaseInteractor;
 
+import core.usecases.DeletePurchase;
+import core.usecases.UpdatePurchase;
 import models.Purchase;
 
-
-import java.util.Hashtable;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ryan on 10/18/17.
@@ -19,23 +21,9 @@ import java.util.List;
  */
 public class PurchaseManager {
     private static PurchaseManager ourInstance = new PurchaseManager();
-
-    private CreatePurchaseInteractor purchaseInteractor = new CreatePurchaseInteractor(new BudgetMonthRepository() {
-        @Override
-        public BudgetMonth getMonthFromDate(String date) {
-            return new BudgetMonth("2/11/2017", 5000);
-        }
-
-        @Override
-        public boolean saveBudgetMonth(BudgetMonth month) {
-            return false;
-        }
-
-        @Override
-        public List<BudgetMonth> monthsFromYear(String year) {
-            return null;
-        }
-    });
+    private CreatePurchaseInteractor createPurchaseInteractor;
+    private DeletePurchase deletePurchase;
+    private UpdatePurchase updatePurchase;
 
 
     public static PurchaseManager getInstance() {
@@ -47,10 +35,24 @@ public class PurchaseManager {
 
     }
 
-    public Purchase savePurchaseData(int id, String category, float amount){
-        PurchaseCreationRequest createRequest = new PurchaseCreationRequest(id, String.valueOf(amount), category, "10/18/2017");
-        Hashtable<String, String> data = purchaseInteractor.handleRequest(createRequest).getMessage();
-        return new Purchase(Float.parseFloat(data.get("amount")),"11/3/2017",
-                data.get("category"), "Name");
+    public void savePurchaseData(Purchase purchase){
+        PurchaseCreationRequest request = new PurchaseCreationRequest(purchase.getId(), purchase.getName(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
+        createPurchaseInteractor.handleRequest(request);
+    }
+
+    public void deletePurchase(Purchase purchase){
+        PurchaseDeletionRequest request = new PurchaseDeletionRequest(purchase.getId());
+        deletePurchase.handleRequest(request);
+    }
+
+    public void updatePurchase(Purchase purchase){
+        PurchaseUpdateRequest updateRequest = new PurchaseUpdateRequest(purchase.getId(), purchase.getName(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
+        updatePurchase.handleRequest(updateRequest);
+    }
+
+    public void setRepo(BudgetMonthRepository repo){
+        createPurchaseInteractor = new CreatePurchaseInteractor(repo);
+        deletePurchase = new DeletePurchase(repo);
+        updatePurchase = new UpdatePurchase(repo);
     }
 }

@@ -1,5 +1,4 @@
 package core.util;
-
 import core.entities.BudgetMonth;
 
 import java.math.BigDecimal;
@@ -7,7 +6,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//package core.util;
+
 
 /**
  * Created by Ryan Phillips on 10/27/17.
@@ -16,19 +15,24 @@ import java.util.HashMap;
  */
 public class MonthComparer {
 	
-	public BudgetMonth currentMonth;
+	private BudgetMonth currentMonth;
 	
 //    public static void getComparisonDataFromMonths(String[] monthsToCompare) {
 //
 //    }
-    
-    public HashMap<String, Double> changeInCategories ( BudgetMonth monthToCompare, String category ) {
+
+
+    public MonthComparer(BudgetMonth currentMonth) {
+        this.currentMonth = currentMonth;
+    }
+
+    public HashMap<String, Double> changeInCategories (BudgetMonth monthToCompare, String category ) {
     	
     	HashMap<String, Double> categoriesToReturn = new HashMap<>();
     	
-    	if ( currentMonth.categories.get(category) > monthToCompare.categories.get(category)
-    			|| currentMonth.categories.get(category) < monthToCompare.categories.get(category) ) {
-    		categoriesToReturn.put(category, currentMonth.categories.get(category));
+    	if ( currentMonth.categoryBudget(category) > monthToCompare.categoryBudget(category)
+    			|| currentMonth.categoryBudget(category) < monthToCompare.categoryBudget(category) ) {
+    		categoriesToReturn.put(category, currentMonth.categoryBudget(category));
     	}
     	
     	return categoriesToReturn;
@@ -38,9 +42,9 @@ public class MonthComparer {
     	
     	double difference = 0;
     	
-    	if ( currentMonth.categories.get(category) > monthToCompare.categories.get(category)
-    			|| currentMonth.categories.get(category) < monthToCompare.categories.get(category) ) {
-    		difference = currentMonth.categories.get(category) - monthToCompare.categories.get(category);
+    	if ( currentMonth.categoryBudget(category) > monthToCompare.categoryBudget(category)
+    			|| currentMonth.categoryBudget(category) < monthToCompare.categoryBudget(category) ) {
+    		difference = currentMonth.categoryBudget(category) - monthToCompare.categoryBudget(category);
     	}
     	
     	return difference;
@@ -48,13 +52,13 @@ public class MonthComparer {
     
     public double percentageChangeInSpending ( BudgetMonth monthToCompare, String category ) {
     	
-    	return new BigDecimal(((currentMonth.categories.get(category) / monthToCompare.categories.get(category)) - 1)
+    	return new BigDecimal(((currentMonth.categoryBudget(category) / monthToCompare.categoryBudget(category)) - 1)
     			* 100).setScale(2, RoundingMode.UP).doubleValue();
     }
     
     public ArrayList<String> categoriesThatIncreased ( BudgetMonth monthToCompare, String[] categories ) {
     	
-    	ArrayList<String> increased = new ArrayList<String>();
+    	ArrayList<String> increased = new ArrayList<>();
     	
     	for ( int i = 0; i < categories.length; i++ ) {
     		if ( differenceInSpending(monthToCompare, categories[i]) > 0 ) {
@@ -77,4 +81,6 @@ public class MonthComparer {
     	
     	return decreased;
     }
+
+
 }

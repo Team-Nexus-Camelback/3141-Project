@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,31 +25,26 @@ class PaymentInfoInteratorTest {
             @Override
             public List<Payment> getUnFinishedPayments() {
                 ArrayList<Payment> testList = new ArrayList<>();
-                try {
-                    testList.add(new Payment(0, "Car Payment", 350.34, "02-11-2017"));
-                    return  testList;
-                }
-                catch (ParseException e){
-                    return null;
-                }
-
-
+                testList.add(new Payment(0, "Car Payment", 350.34, new Date(2017, 02, 21)));
+                return  testList;
             }
 
             @Override
             public Payment paymentByID(int id) {
-                try {
-                    return new Payment(0, "Car Payment", 350.34, "11/2/17");
-                }
-                catch (ParseException e){
-                    return null;
-                }
+                return new Payment(0, "Car Payment", 350.34, new Date(2017, 02, 21));
             }
 
             @Override
-            public boolean savePayment(Payment payment) {
+            public boolean savePayment(Payment payment, int id) {
                 return false;
             }
+
+            @Override
+            public boolean deletePaymentByID(int id) {
+                return false;
+            }
+
+
         });
     }
 
