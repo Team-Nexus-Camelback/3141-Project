@@ -9,12 +9,15 @@ import core.entities.PurchaseFactory;
 import core.gateways.BudgetMonthRepository;
 import core.gateways.IRequestHandler;
 
-import java.util.Hashtable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 
 /**
  * Created by ryan on 10/17/17.
  */
-public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreationRequest, PurchaseResponseMessage> {
+public class CreatePurchaseInteractor extends AbstractHandler<PurchaseCreationRequest, PurchaseResponseMessage> {
 
     private BudgetMonthRepository monthRepository;
     private PurchaseFactory purchaseFactory = new PurchaseFactory();
@@ -26,11 +29,12 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
         this.monthRepository = monthRepository;
     }
 
-    private BudgetMonth getMonthFromRequestDate(String requestDate){
+    private BudgetMonth getMonthFromRequestDate(String requestDate) throws ParseException {
         if (requestDate.equals(currentWorkingMonth.getMonthDate()))
             return currentWorkingMonth;
         else {
-            BudgetMonth revelvantMonth = monthRepository.getMonthFromDate(requestDate);
+            String date  = getMonthDate(requestDate);
+            BudgetMonth revelvantMonth = monthRepository.getMonthFromDate(date);
             switchWorkingMonth(revelvantMonth);
             return revelvantMonth;
         }
@@ -40,10 +44,14 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
         this.currentWorkingMonth = revelvantMonth;
     }
 
-    // TODO add error checking
     @Override
     public PurchaseResponseMessage handleRequest(PurchaseCreationRequest request) {
-        BudgetMonth month =  getMonthFromRequestDate(request.getDate());
+        BudgetMonth month = null;
+        try {
+            month = getMonthFromRequestDate(request.getDate());
+        } catch (ParseException e) {
+            return errorResponse("Date is not correct");
+        }
         Purchase purchaseToAdd = purchaseFactory.makeNewPurchaseFromRequest(request);
         savePurchaseToMonth(purchaseToAdd, month);
         return createResponseFromRequest(request);
@@ -62,5 +70,15 @@ public class CreatePurchaseInteractor implements IRequestHandler<PurchaseCreatio
         return new PurchaseResponseMessage(responseData);
     }
 
+    private String getMonthDate(String date) throws ParseException {
+        Date purchaseDate = new SimpleDateFormat("MM/dd/yy", Locale.ENGLISH).parse(date);
+        return new SimpleDateFormat("MM-YYYY").format(purchaseDate);
+    }
 
+    @Override
+    protected PurchaseResponseMessage errorResponse(String errorMessage) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put(PurchaseKeys.ERROR.key(), errorMessage);
+        return new PurchaseResponseMessage(errorResponse);
+    }
 }

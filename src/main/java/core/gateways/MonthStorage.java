@@ -33,14 +33,20 @@ public class MonthStorage implements BudgetMonthRepository {
 
 	@Override
 	public boolean saveBudgetMonth(BudgetMonth month) {
+		if (getMonthFromDate(month.getMonthDate()) != null)
+			return writer.updateMonth(month.getMonthDate(), month);
 		return writer.saveMonthData(month);
 	}
 
 	@Override
 	public boolean deletePurchase(String monthDate, int id) {
-		BudgetMonth month = turnElementIntoMonth(reader.getMonthFromDate(monthDate));
-		month.getPurchasesList().removeIf(purchase -> purchase.getId() == id);
-		return true;
+		Element monthToUse = reader.getMonthFromDate(monthDate);
+		if (monthToUse != null) {
+			BudgetMonth month = turnElementIntoMonth(monthToUse);
+			month.getPurchasesList().removeIf(purchase -> purchase.getId() == id);
+			return writer.updateMonth(monthDate, month);
+		}
+		return false;
 	}
 
 	@Override
