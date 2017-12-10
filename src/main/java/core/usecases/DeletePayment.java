@@ -23,11 +23,6 @@ public class DeletePayment extends AbstractHandler<PaymentDeletionRequest, Payme
 
     @Override
     public PaymentResponseMessage handleRequest(PaymentDeletionRequest request) {
-        try {
-            Payment paymentToDelete = repository.paymentByID(request.getId());
-        } catch (ParseException e) {
-            return errorResponse("Date not correct");
-        }
         if (!repository.deletePaymentByID(request.getId()))
             return errorResponse("Payment was not properly deleted");
         return null;
