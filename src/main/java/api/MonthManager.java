@@ -3,6 +3,7 @@ package api;
 import core.Dto.Month.MonthKeys;
 import core.Dto.Month.MonthRequestMessage;
 
+import core.Dto.Month.MonthResponseMessage;
 import core.Dto.Month.MonthUpdateRequest;
 import core.gateways.BudgetMonthRepository;
 import core.usecases.GetBudgetMonth;
@@ -38,12 +39,13 @@ public class MonthManager {
 
     public Month getMonthData(String monthDate){
         MonthRequestMessage request = new MonthRequestMessage(true, monthDate);
-        return translateResponseToModel(getBudgetMonth.handleRequest(request).getMessage());
+        MonthResponseMessage responseMessage = getBudgetMonth.handleRequest(request);
+        return translateResponseToModel(responseMessage.getMessage());
 
     }
 
     public boolean updateMonth(Month updateMonth){
-        MonthUpdateRequest request = new MonthUpdateRequest(updateMonth.getMonthDate(), updateMonth.getSpendingAmount(), updateMonth.getOverview());
+        MonthUpdateRequest request = createUpdateRequest(updateMonth);
         return updateBudgetMonth.handleRequest(request) == null;
     }
 
@@ -71,5 +73,9 @@ public class MonthManager {
     public void setRepo(BudgetMonthRepository repo){
         getBudgetMonth = new GetBudgetMonth(repo);
         updateBudgetMonth = new UpdateBudgetMonth(repo);
+    }
+
+    private MonthUpdateRequest createUpdateRequest(Month data){
+        return new MonthUpdateRequest(data.getMonthDate(), data.getSpendingAmount(), data.getOverview());
     }
 }
