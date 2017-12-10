@@ -42,7 +42,7 @@
         </MenuBar>
     </top>
     <center>
-        <TabPane prefHeight="600.0" prefWidth="1000.0" minHeight="-Infinity" maxHeight="Infinity" minWidth="-Infinity" maxWidth="Infinity" side="LEFT" tabClosingPolicy="UNAVAILABLE"
+        <TabPane prefHeight="600.0" prefWidth="800.0" minHeight="-Infinity" maxHeight="Infinity" minWidth="-Infinity" maxWidth="Infinity" side="LEFT" tabClosingPolicy="UNAVAILABLE"
                  BorderPane.alignment="CENTER">
             <tabs>
                 <!--This is the "main" view. It will have the add button so people can add their perchases-->
