@@ -1,3 +1,7 @@
+package core.util;
+
+import core.entities.BudgetMonth;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;

@@ -10,7 +10,7 @@ public class BudgetMonth {
     private ArrayList<Purchase> purchasesList = new ArrayList<>();
     private ArrayList<Payment> paymentList = new ArrayList<>();
     private String monthDate;
-    private HashMap<String, Double> categories = new HashMap<>();
+    public HashMap<String, Double> categories = new HashMap<>();
     private double amountSpendingForMonth;
 
     public BudgetMonth(String date, double allocateMoney) {
