@@ -30,10 +30,7 @@ public class PurchaseManager {
         return ourInstance;
     }
 
-    private PurchaseManager() {
-        // this is a temporary setup for this class
-
-    }
+    private PurchaseManager() {}
 
     public void savePurchaseData(Purchase purchase){
         PurchaseCreationRequest request = new PurchaseCreationRequest(purchase.getId(), purchase.getName(), purchase.getAmount(), purchase.getCategory(), purchase.getDate());
