@@ -32,7 +32,7 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.FloatStringConverter;
 import models.Purchase;
 import models.Month;
-import org.controlsfx.dialog.LoginDialog;
+//import org.controlsfx.dialog.LoginDialog;
 
 /**
  * FXML Controller class
