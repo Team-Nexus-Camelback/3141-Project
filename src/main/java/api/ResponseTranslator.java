@@ -45,8 +45,11 @@ public class ResponseTranslator {
     public static List<Purchase> purchaseFromResponse(String purchasesData) {
         purchasesData = removeBoundry(purchasesData);
         ArrayList<Purchase> purchaseArrayList = new ArrayList<>();
-        models.Purchase newPurchase = createPurchaseFromString(purchasesData);
-        purchaseArrayList.add(newPurchase);
+        String[] purchases = purchasesData.split(",");
+        for (String purchase : purchases) {
+            models.Purchase newPurchase = createPurchaseFromString(purchase);
+            purchaseArrayList.add(newPurchase);
+        }
         return purchaseArrayList;
     }
 
