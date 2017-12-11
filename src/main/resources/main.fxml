@@ -151,6 +151,11 @@
                                                     </items>
                                                 </SplitPane>
                                                 <TableView fx:id="billsDue" GridPane.rowIndex="2">
+                                                    <columns>
+                                                        <TableColumn text="Name" fx:id="paymentNameCol"/>
+                                                        <TableColumn text="Amount" fx:id="paymentAmountCol"/>
+                                                        <TableColumn text="Due Date" prefWidth="90" fx:id="dueDateCol"/>
+                                                    </columns>
                                                     <!-- For stuff to update table of Bills Due -->
                                                 </TableView>
                                             </children>
